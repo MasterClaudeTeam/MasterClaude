@@ -1,0 +1,17 @@
+# Dependencies / build
+node_modules/
+dist/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Claude Code local / per-user state (don't ship dogfood artifacts)
+.sentinel/
+.master-claude/
+.claude/settings.local.json
+.claude/master-claude.json

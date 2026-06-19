@@ -1,0 +1,15 @@
+{
+  "name": "masterclaude",
+  "owner": { "name": "MASTER CLAUDE", "url": "https://masterclaude.shop" },
+  "description": "MASTER CLAUDE — a free, open-source Claude Code team: a conductor that assembles Sentinel plus planning, review, and guardrail specialists for your project.",
+  "plugins": [
+    {
+      "name": "master-claude",
+      "source": "./",
+      "description": "Say \"master claude\": the conductor interviews you, maps your project, and assembles a tailored team (Sentinel the cartographer + planning, review, and guardrail skills) — free, local, no vault.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "homepage": "https://masterclaude.shop"
+    }
+  ]
+}
