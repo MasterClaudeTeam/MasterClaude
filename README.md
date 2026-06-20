@@ -7,7 +7,6 @@ planning, review, and guardrail specialists — then runs it on your work.
 No account. No API key. No vault. Everything is local, plain text, and open.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Sponsor](https://img.shields.io/badge/Sponsor-❤-db61a2.svg)](https://github.com/sponsors/aturzone)
 [![Buy me a coffee in TON](https://img.shields.io/badge/Buy%20me%20a%20coffee-TON-0098EA.svg)](https://masterclaude.shop/donate)
 
 ---
@@ -91,12 +90,9 @@ MASTER CLAUDE will recommend (never force) external tools when they fit: **super
 review base), **gsd** (spec-driven autonomous builds), **caveman** (fewer output tokens on long sessions).
 
 ## Support the project ☕
-MASTER CLAUDE is free and open source. If it saves you time, you can **buy it a coffee**:
-- **TON** — a "buy me a coffee" in TON: <https://masterclaude.shop/donate>
-- **GitHub Sponsors** — <https://github.com/sponsors/aturzone>
-- **Ko-fi** — <https://ko-fi.com/aturzone>
-- **Open Collective** — <https://opencollective.com/master-claude>
-- **Buy Me a Coffee** — <https://www.buymeacoffee.com/aturzone>
+MASTER CLAUDE is free and open source. If it saves you time, **buy it a coffee in TON** —
+100% on-chain, wallet-to-wallet, no accounts or cards, and you can leave a message with your
+donation: <https://masterclaude.shop/donate>
 
 ## Contributing
 PRs welcome — add or sharpen a skill. See [CONTRIBUTING.md](CONTRIBUTING.md). Licensed under [MIT](LICENSE).
