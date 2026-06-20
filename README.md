@@ -21,7 +21,7 @@ the smallest team that helps, and gets to work. Bring in more members the moment
 ## Quick start
 1. **Install** (in Claude Code):
    ```
-   /plugin marketplace add aturzone/master-claude-plugin
+   /plugin marketplace add aturzone/MasterClaude
    /plugin install master-claude@masterclaude
    ```
 2. **Run it** — in any project, say:
@@ -31,8 +31,8 @@ the smallest team that helps, and gets to work. Bring in more members the moment
    (or run `/master-claude`). It interviews you, maps the repo, and assembles your team.
 3. **See your team** any time: `/master-claude-team`.
 
-> Manual install (fallback): `git clone https://github.com/aturzone/master-claude-plugin` then
-> `/plugin marketplace add ./master-claude-plugin` and `/plugin install master-claude@masterclaude`.
+> Manual install (fallback): `git clone https://github.com/aturzone/MasterClaude` then
+> `/plugin marketplace add ./MasterClaude` and `/plugin install master-claude@masterclaude`.
 
 ## The team
 | Member | Kind | What it does |

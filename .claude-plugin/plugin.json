@@ -5,7 +5,7 @@
   "description": "A free, open-source Claude Code team. Say \"master claude\" and the Conductor interviews you (grill-me), maps your project, then assembles a tailored team from the installed skills and agents — Sentinel the project cartographer plus planning, review, and guardrail specialists — and runs it on your work. No account, no API key, no vault: everything is local and open.",
   "author": { "name": "MASTER CLAUDE", "url": "https://masterclaude.shop" },
   "homepage": "https://masterclaude.shop",
-  "repository": "https://github.com/aturzone/master-claude-plugin",
+  "repository": "https://github.com/aturzone/MasterClaude",
   "license": "MIT",
   "keywords": ["claude-code", "skills", "agents", "conductor", "cartographer", "code-review", "guardrails", "tdd"]
 }
