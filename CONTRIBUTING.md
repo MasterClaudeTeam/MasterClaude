@@ -1,45 +1,90 @@
 # Contributing to MASTER CLAUDE
 
-Thanks for helping make MASTER CLAUDE better. It's a collection of Claude Code **skills** and
-**agents** plus a **conductor** that assembles them into a team for your project. Everything here is
-plain text — no build step.
+Thanks for helping build MASTER CLAUDE — a free, open-source Claude Code team. It's a collection of
+**skills**, **agents**, and a **leader** that assembles them for your project. Everything here is plain
+text: no build step, no secrets, no accounts.
+
+This is a community project. Our first focus is **a clean, well-organized structure** so that anyone who
+installs Claude Code gets a ready-made, guided setup from day one — and so the library scales across many
+tools and many **tech stacks**.
+
+## Requirements
+Claude Code **≥ 2.1.183** (the categorized skill folders use nested-skill discovery). Check with
+`claude --version`; run `claude update` if you're behind.
 
 ## Repo layout
 ```
-.claude-plugin/plugin.json   # plugin manifest
-skills/<name>/SKILL.md        # one skill per folder (frontmatter + a methodology body)
-agents/sentinel.md            # the cartographer agent
-commands/*.md                 # slash commands (master-claude, master-claude-team, sentinel:*)
-hooks/                        # the Sentinel session nudge
+.claude-plugin/{plugin,marketplace}.json   # manifests
+skills/
+  master-claude/SKILL.md     # the leader (entry point)
+  planning/   <skill>/SKILL.md   # spec & plan before code
+  review/     <skill>/SKILL.md   # critique the diff & design
+  understand/ <skill>/SKILL.md   # explain, debug, trace history
+  guardrails/ <skill>/SKILL.md   # keep the work honest & healthy (the Guardian suite)
+  workflows/  <skill>/SKILL.md   # big multi-step jobs
+agents/<name>.md             # subagents (Sentinel, the cartographer)
+commands/                    # slash commands (/master-claude, /master-claude:whats-new, /sentinel:*)
+hooks/                       # the Sentinel session nudge (a dep-free Node hook)
 ```
+Each `skills/<category>/README.md` explains the category and **brainstorms what's missing** — the fastest
+way to find a good first contribution.
 
-## Add or improve a skill
-1. Create `skills/<your-skill>/SKILL.md` with YAML frontmatter:
+## Add a skill
+1. Pick the category that fits (`planning` / `review` / `understand` / `guardrails` / `workflows`). If
+   nothing fits, propose a new category in your PR.
+2. Create `skills/<category>/<your-skill>/SKILL.md`:
    ```markdown
    ---
    name: your-skill
-   description: One or two sentences describing WHEN Claude should reach for this skill (this drives triggering).
+   description: One or two sentences on WHEN Claude should reach for this skill (this drives triggering).
+   # optional: allowed-tools: Read Grep Bash WebFetch
    ---
 
    # Title
 
-   The methodology — written as instructions to Claude ("You are …", "When X, do Y").
+   The methodology, written as instructions to Claude ("You are …", "When X, do Y").
    ```
-2. Keep it focused: one job, done well. A skill the developer actually uses beats a big one they ignore.
-3. Test it locally (see below), then open a PR describing the gap it fills.
+3. Keep it **focused**: one job, done well. A skill the developer actually uses beats a big one they ignore.
 
-## Test locally
-Install the plugin into a scratch project (see the README), then in Claude Code:
-- run `master-claude` and confirm your skill is discovered and assembled when relevant;
-- for the cartographer, run `/sentinel:map` then make a change and `/sentinel:sweep`.
+### Multi-stack skills
+We want skills that work across stacks **and** stack-specific ones. If your skill is stack-specific, make
+the stack clear in the `name`/`description` (e.g. `go-concurrency-review`, `react-render-review`,
+`mypy-gate`) so the leader picks it only when the stack matches. Generic skills should detect the stack
+themselves (read the manifest/lockfile) rather than assume one.
 
-## Guidelines
-- **Honest and minimal.** No invented capabilities; no scope creep in a skill's body.
+## Add an agent / workflow / command
+- **Agent** (a read-only or specialized subagent): `agents/<name>.md` with frontmatter `name`,
+  `description` (say when to use it), and `tools:` (e.g. `Read, Grep, Glob, Bash`). Agents may be nested
+  in subfolders, e.g. `agents/<category>/<name>.md`.
+- **Workflow**: a skill under `skills/workflows/` that drives a long, multi-pass procedure.
+- **Command**: `commands/<name>.md` (→ `/name`) or `commands/<group>/<name>.md` (→ `/group:name`).
+
+## Conventions
+- **Names** are kebab-case and unique. Keep the `<verb>-<noun>` shape where it reads well.
+- **Descriptions** are trigger-focused (they decide when the skill fires) — say *when to use it*, not just
+  what it is.
+- **No secrets, ever.** No keys, tokens, or `.env` content.
 - **Read-only agents stay read-only.** Sentinel only ever writes under `.sentinel/`.
-- **No secrets.** Never commit keys, tokens, or `.env` content.
-- Match the surrounding style; keep frontmatter descriptions trigger-focused.
+- Match the surrounding style; one focused job per skill.
 
-## Support the project
-MASTER CLAUDE is free. If it helps you, [buy it a coffee](https://masterclaude.shop/donate) ☕ — see
-`.github/FUNDING.yml` for all the ways. By contributing you agree your work is licensed under the
-project's [MIT License](LICENSE).
+## Test it locally
+Install the plugin into a scratch project and exercise your change:
+```
+/plugin marketplace add ./MasterClaude     # from the repo's parent dir, or: add aturzone/MasterClaude
+/plugin install master-claude@masterclaude
+/reload-plugins
+```
+Then run `master claude` and confirm your skill is discovered and assembled when relevant; for the
+cartographer, run `/sentinel:map`, make a change, and `/sentinel:sweep`.
+
+## How we say thanks — the monthly TON share ☕
+MASTER CLAUDE is funded by donations (a TON "buy me a coffee" widget at
+[masterclaude.shop/donate](https://masterclaude.shop/donate)). At the **end of each month**, contributors
+who merged work and want to take part can share a **TON wallet address** — include it in your PR (or tell
+us in the channel) — and we send a slice of that month's donations their way, split fairly by
+contribution. Be honest with everyone: open-source donations are usually modest, so treat this as a
+thank-you, not a salary. No address, no problem — contributions are always welcome either way.
+
+## Conduct & license
+Be kind, be direct, assume good faith. By contributing you agree your work is licensed under the project's
+[MIT License](LICENSE).
