@@ -42,8 +42,8 @@ team that helps, gets to work, and brings in more members the moment a need show
 The leader picks a **minimal** subset per project — never all at once. Capabilities are organized by
 category; each folder has a README that brainstorms what else belongs there (good first contributions).
 
-- **`agents/` → Sentinel** — project cartographer; keeps a living map in `.sentinel/` and flags
-  gaps / bugs / missing tests in real time. Read-only toward your source.
+- **`agents/`** — **Sentinel** (project cartographer → `.sentinel/`) and the **Security Auditor**
+  (read-only vulnerability audit → `.security/`). Read-only toward your source.
 - **`skills/planning/`** — `grill-me` · `cap-plan-first` · `cap-spec-smith` · `cap-decomposer` — turn a
   fuzzy ask into a spec & plan.
 - **`skills/review/`** — `cap-self-review` · `cap-red-team` — critique the diff and the design.
@@ -51,7 +51,9 @@ category; each folder has a README that brainstorms what else belongs there (goo
   and trace history.
 - **`skills/guardrails/`** (the Guardian suite) — `guardian` · `supplyguard` · `testmedic` · `debtradar` ·
   `compactor` · `guardian-suite` — keep the work honest and the codebase healthy.
-- **`skills/workflows/`** — `wf-codebase-audit` — big, multi-step jobs.
+- **`skills/security/`** — `sec-authz-review` · `sec-attacker-review` · `sec-injection` · `sec-authn-session` ·
+  `sec-secrets-crypto` · `sec-ssrf-traversal` — review for vulnerabilities, front→back (OWASP/CWE, with fixes).
+- **`skills/workflows/`** — `wf-codebase-audit`, `wf-security-audit` — big, multi-step jobs.
 
 ## How it works
 1. **Interview (grill-me).** Developer → want → purpose → project → environment — one sharp question at a

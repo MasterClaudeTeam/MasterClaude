@@ -38,8 +38,9 @@ each skill's frontmatter `description` to know when to reach for it.
 | `review/` | cap-self-review, cap-red-team — critique the diff and the design |
 | `understand/` | cap-explain-senior, cap-rubber-duck, codehistorian — explain, debug, and trace history |
 | `guardrails/` | guardian, supplyguard, testmedic, debtradar, compactor, guardian-suite — keep the work honest & healthy |
-| `workflows/` | wf-codebase-audit — big multi-step jobs |
-| `agents/` | **Sentinel** — the continuous project cartographer (flagship) |
+| `security/` | sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review — review for vulnerabilities, front→back |
+| `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
+| `agents/` | **Sentinel** — the project cartographer; **security-auditor** — read-only security audit → `.security/` |
 
 New categories and skills land here over time (the project is community-driven) — so **discover, don't
 assume**: re-scan the tree rather than relying on this table.
@@ -102,6 +103,14 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | a refactor with no clear target | **debtradar** | ranks hotspots by churn × complexity |
 | "why is this code like this?" / a regression | **codehistorian** | git archaeology |
 | a new dependency being added | **supplyguard** | blocks hallucinated/typosquatted/vulnerable deps |
+| code touches auth, permissions, or roles | **sec-authz-review** | IDOR/BOLA/privesc — the #1 web risk |
+| an endpoint fetches/mutates a resource by id | **sec-authz-review** | object-level authz (BOLA/IDOR) |
+| building a query, command, or HTML from input | **sec-injection** | SQLi / XSS / command injection |
+| login, JWT, session, or password-reset code | **sec-authn-session** | auth bypass / token forgery |
+| committing config / about to open-source | **sec-secrets-crypto** | leaked keys + weak crypto |
+| the server fetches a URL / path / upload from input | **sec-ssrf-traversal** | SSRF / path traversal |
+| a security-sensitive feature, or pre-release | **wf-security-audit / security-auditor** | full front→back audit → `.security/` |
+| user asks for a security review / audit | **/master-claude:security** | runs the right security pass |
 | user asks what's new / wants the latest | **/master-claude:whats-new** | version + changelog + ecosystem news |
 
 ## Customization

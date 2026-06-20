@@ -85,6 +85,13 @@ us in the channel) — and we send a slice of that month's donations their way, 
 contribution. Be honest with everyone: open-source donations are usually modest, so treat this as a
 thank-you, not a salary. No address, no problem — contributions are always welcome either way.
 
+## Keep it in sync
+A capability is more than its `SKILL.md` — MASTER CLAUDE must stay aware of it and the docs/site must update.
+Follow **[docs/ADDING-A-CAPABILITY.md](docs/ADDING-A-CAPABILITY.md)** (the leader's category/proactive table,
+the website `catalog/`, regenerate `catalog.json`, push + deploy). Run `node scripts/validate.mjs` (also
+enforced in CI) and `node scripts/sync-check.mjs` before opening your PR — or just `/master-claude:checklist`
+in the repo.
+
 ## Conduct & license
 Be kind, be direct, assume good faith. By contributing you agree your work is licensed under the project's
 [MIT License](LICENSE).
