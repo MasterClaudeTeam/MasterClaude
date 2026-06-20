@@ -12,11 +12,14 @@ under `.security/`. These are review methodologies, not attack tooling.
 - `sec-authn-session` — auth/session/JWT: credentials, fixation, JWT flaws, MFA, enumeration, reset.
 - `sec-secrets-crypto` — hardcoded secrets, secrets in logs/history, weak/misused crypto, insecure randomness.
 - `sec-ssrf-traversal` — SSRF, path traversal, open redirect, unrestricted file upload.
+- `sec-frontend` — client-side: XSS sinks, CSP, CSRF, clickjacking, CORS, postMessage, client-side secrets.
+- `sec-api` — REST/GraphQL: BOLA/BFLA, mass assignment, excessive data exposure, rate limits, GraphQL depth.
+- `sec-deps` — vulnerable / outdated / typosquatted dependencies, lockfile integrity, CVE checks.
+- `sec-iac-cloud` — Docker/K8s/Terraform/cloud misconfig (root containers, public buckets, open IAM/SGs).
+- `sec-threat-model` — a STRIDE threat model of a feature or system (design-time).
+- `sec-headers-config` — security headers, cookie flags, TLS, error/info leak, debug surface.
 
 **Brainstorm — what else belongs here** (great contributions)
-- `sec-frontend` (CSP/CSRF/clickjacking/CORS/postMessage), `sec-api` (BOLA/BFLA/mass-assignment/GraphQL),
-  `sec-deps` (vulnerable/typosquatted deps), `sec-iac-cloud` (Docker/K8s/Terraform/cloud misconfig),
-  `sec-threat-model` (STRIDE), `sec-headers-config`.
 - Further: `sec-deserialization`, `sec-pii-privacy`, `sec-logging-monitoring`, `sec-mobile`,
   `sec-llm` (prompt injection / insecure tool use), and stack-specific gates (`go-sec`, `node-sec`, `python-sec`).
 
