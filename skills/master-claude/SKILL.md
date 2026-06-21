@@ -6,7 +6,8 @@ description: >-
   or when starting work in a new/unfamiliar project. It interviews you (grill-me), maps the project, then
   assembles a tailored team from the installed skills and agents — Sentinel the project cartographer plus
   planning, review, understanding, guardrail and security specialists — and runs it on your work. It
-  brainstorms hard and decides fast, can run autonomously in GOD mode (build until you stop it, resuming
+  builds the best `.claude/` workspace per project, delegates to parallel subagents (choosing the right model
+  per agent), brainstorms hard and decides fast, can run autonomously in GOD mode (build until you stop it, resuming
   past usage limits) and set up scheduled unattended runs, keeps a complete view of every installed
   capability, keeps itself and you current with the newest Claude Code features, and proactively offers
   the right tool the moment a need shows up.
@@ -66,6 +67,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 | `security/` | sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review — review for vulnerabilities, front→back |
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
 | `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs) |
+| `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **workspace-architect** (build the best `.claude/` workspace for a project) |
 | `agents/` | **Sentinel** — the project cartographer; **security-auditor** — read-only security audit → `.security/` |
 
 New categories and skills land here over time (the project is community-driven) — so **discover, don't
@@ -82,7 +84,8 @@ back and get a "yes".
 ### Stage 2 — Map the project & take stock
 Detect the stack and structure; note what's installed/active and what the stack implies they'll need
 (tests, CI, security, performance, debt). Name the **gaps** for *this* goal. **Sentinel** is installed —
-offer to build the living project map now.
+offer to build the living project map now. Then shape the **workspace** — what *this* project's `.claude/`
+should hold (a lean CLAUDE.md, the right skills/agents/hooks, a real verify path): see **workspace-architect**.
 
 ### Stage 3 — Assemble the team (installed skills + ecosystem)
 Pick a **tailored, minimal** team and explain *why* each member fits this developer and goal.
@@ -90,7 +93,9 @@ Pick a **tailored, minimal** team and explain *why* each member fits this develo
   spec-smith + self-review + Sentinel; *harden a service* → red-team + guardian/supplyguard + Sentinel;
   *tame a long session* → compactor.
 - **From the wider Claude ecosystem** (you're the user's guide here too): **superpowers** (broad TDD/review
-  base), **gsd** (spec-driven autonomous builds), **caveman** (~65% fewer output tokens on long sessions).
+  + subagent base), **mattpocock/skills** (the original `grill-me` + engineering skills), **gsd** (spec-driven
+  autonomous builds), **caveman** (~65% fewer output tokens on long sessions). Recommend the right one;
+  never force it. The full list + what to learn from each is in `docs/ECOSYSTEM.md`.
 
 ### Stage 4 — Run the team & improve the project
 Don't stop at "recommended" — **staff it and do the work.** Invoke the relevant skill directly, or **spawn
@@ -107,7 +112,8 @@ You have a real team and real tools; wield them deliberately, not timidly.
   lever.
 - **Parallelize.** Spawn **Task subagents** for independent work — research N options at once, review
   several files in parallel, run isolated experiments — then synthesize. Don't do serially what can run at
-  once.
+  once. Playbook: **subagent-orchestration** (when to fan out, the 4-part delegation brief, verify with a
+  fresh reviewer); pick a model per agent with **model-router** (Opus lead · Sonnet workers · Haiku scouts).
 - **Guardrails on by default.** On real changes keep **guardian** + **Sentinel** live, and run **sec-***
   when code touches auth, input, or secrets. Verification isn't optional.
 - **Verify, always.** Build it, run the tests, exercise it — show proof, not claims.
@@ -191,6 +197,9 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | "build it and don't stop" / wants autonomy / a long unattended push | **god-mode** (`/master-claude:god-mode`) | relentless resumable build; asks only for the critical, auto-resumes past limits, only STOP halts it |
 | wants a fully unattended "run dark" session, accepts full risk | **god-mode-zeus** (`/master-claude:god-mode-zeus`) | the dangerously, never-ask max-autonomy tier |
 | wants a recurring / overnight / scheduled run | **scheduling** (`/master-claude:schedule`) | cron/schtasks/launchd unattended runs (sweeps, audits, GOD mode) |
+| starting in a new/unfamiliar project, or setup feels ad hoc | **workspace-architect** | builds the right lean `.claude/` for this project |
+| work splits into independent chunks / needs many files read / a fresh-eyes review | **subagent-orchestration** | orchestrator-worker delegation, parallel where it pays |
+| spawning agents and unsure which model, or cost piling up | **model-router** | right model per agent (Opus/Sonnet/Haiku), turn-count beats price |
 | an open-ended choice: architecture, approach, "what to build" | **brainstorm → decide** | diverge wide, converge on criteria, record the call |
 
 ## Customization

@@ -66,6 +66,9 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`skills/workflows/`** — `wf-codebase-audit`, `wf-security-audit` — big, multi-step jobs.
 - **`skills/automation/`** — `god-mode` (an autonomous, resumable build; asks only for the critical) ·
   `god-mode-zeus` (the dangerously, never-ask tier) · `scheduling` (cron/schtasks/launchd recurring runs).
+- **`skills/orchestration/`** — `subagent-orchestration` (delegate to subagents/teams) · `model-router`
+  (pick a model per agent — Opus lead / Sonnet workers / Haiku scouts) · `workspace-architect` (the best
+  `.claude/` setup per project).
 
 ## How it works
 1. **Interview (grill-me).** Developer → want → purpose → project → environment — one sharp question at a
@@ -128,8 +131,12 @@ Drop a `.claude/master-claude.json` in your project to steer the leader (all key
 ```
 
 ## Plays nicely with the wider ecosystem
-MASTER CLAUDE will recommend (never force) external tools when they fit: **superpowers** (broad TDD/review
-base), **gsd** (spec-driven autonomous builds), **caveman** (fewer output tokens on long sessions).
+MASTER CLAUDE will recommend (never force) external tools when they fit: **[superpowers](https://github.com/obra/superpowers)**
+(broad TDD/review + subagent base), **[mattpocock/skills](https://github.com/mattpocock/skills)** (the
+original `grill-me` + engineering skills), **gsd** (spec-driven autonomous builds), **caveman** (fewer output
+tokens on long sessions). We learn from the best of the community and build our own — we **don't vendor their
+files**; we credit them and point you upstream. The full list + what each taught us is in
+**[docs/ECOSYSTEM.md](docs/ECOSYSTEM.md)**.
 
 ## Contributing
 This is a community project — PRs welcome. Add or sharpen a skill, an agent, or a workflow; each category

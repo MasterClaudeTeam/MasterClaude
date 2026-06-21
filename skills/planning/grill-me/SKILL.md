@@ -19,11 +19,30 @@ Interrogate the request until it is unambiguous — then, and only then, build. 
 5. **Go deep, not wide.** Chase the consequences of each answer ("if X, then what about Y?") instead of skimming many shallow topics.
 6. **Know when to stop.** Stop the moment you could write a precise spec with no remaining guesses.
 
+## Waves — escalate depth as you go
+Don't lead with your hardest question. Move in **waves**, going deeper only once the basics are pinned:
+1. **Basics** — goal, target user, scope & non-goals, the core flow.
+2. **Shape** — inputs/outputs & data shapes, constraints (perf/platform/deadline), success criteria,
+   dependencies & how it integrates with what exists.
+3. **Edges & adversarial** — edge cases, failure modes, contradictions in what you've heard, and the
+   *implicit assumptions* the user hasn't said out loud.
+
+Within each wave, walk the **decision tree depth-first**: finish one branch (and its consequences) before
+opening the next, and order questions so an upstream choice unlocks the downstream ones.
+
 ## Loop
 1. Restate the goal in one sentence.
 2. Explore the code to pre-answer what you can; note your assumptions.
 3. Ask the single most decision-changing open question — with a recommended answer.
 4. Incorporate the answer; repeat step 3 until the spec is unambiguous.
-5. Echo the final spec back (goal, scope, non-goals, approach, success criteria) and get a clear yes before building.
+5. **Hand off — don't just chat.** Echo a structured spec (goal · scope · non-goals · approach · success
+   criteria · open risks) and get a clear yes. For anything sizeable, **write it down** — pass it to
+   **cap-spec-smith** / **cap-plan-first**, or save it under `.master-claude/` — so the interview becomes an
+   artifact you build from, and a long grill can resume later (pair with **compactor**).
 
 Be direct and curious, never interrogating for its own sake — every question must change what you will build.
+
+---
+*Credits:* the one-question + recommended-default + codebase-first discipline is the hallmark of Matt
+Pocock's `grill-me` (`mattpocock/skills`, MIT); wave-based escalation echoes `Jekudy/grillme-skill`. See
+`docs/ECOSYSTEM.md`.
