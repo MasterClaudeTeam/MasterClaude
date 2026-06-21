@@ -82,11 +82,22 @@ the start of every cycle (and after any compaction).
 Keep cycles **small and verifiable** — many small proven steps beat one giant unverified leap, and small
 steps are what make the work resumable.
 
-## Blockers — defer, don't stop
-A **blocker** is anything you cannot safely or legitimately do yourself. When you hit one: write it to
-`BLOCKERS.md` (what's needed, why, which tasks it unblocks), mark those tasks `[!]`, and **move on**.
+## Blockers & critical asks — never idle, but ask before the big irreversible ones
+GOD mode is auto by default — you don't stop for permission on normal work. But when you hit something you
+can't just do, decide which of two it is, then **keep building everything else**:
 
-Treat as blockers (these match the user's "when we reach production I'll give you access"):
+- **Ask the user** (when they're reachable) for a **very high-stakes or high-access** action where guessing
+  wrong is expensive or hard to undo — elevated/admin access, a production or shared-environment change, a
+  costly or irreversible commitment, overwriting/deleting something real, spending money. Surface **one
+  concise question**, keep working other tasks while you wait, and act on the answer. Asking for the
+  genuinely critical things is expected — not a failure. *(Running fully unattended via the runner with no
+  human present? You can't ask a wall — downgrade these to BLOCKERS entries and continue. The separate
+  **Zeus** variant never asks at all — see below.)*
+- **Defer** (always safe) anything that simply needs an input you don't have yet: write it to `BLOCKERS.md`
+  (what's needed, why, which tasks it unblocks), mark those tasks `[!]`, and move on.
+
+Never halt the whole mission — ask or defer, then continue. The candidates to ask-about-or-defer (these
+match the user's "when we reach production I'll give you access"):
 - **Production / deploys / releases** — pushing to prod, shipping a release, DNS, anything affecting live users.
 - **Real secrets & credentials** — API keys, tokens, passwords, private keys, prod DB strings. Use
   fakes/`.env.example` placeholders locally; queue the real ones.
@@ -146,6 +157,15 @@ node .claude/skills/automation/god-mode/runner.mjs
 
 The runner uses the Claude CLI in autonomous mode, so warn the user it runs unattended — the safety rails
 above are what keep that safe. (Run `node .claude/skills/automation/god-mode/runner.mjs --help` for options.)
+
+## Two tiers: normal GOD mode vs Zeus
+- **Normal GOD mode (default — what you run)**: auto, but it **asks** for the very high-stakes / high-access
+  calls (when you're reachable) and defers the rest. The conservative autopilot.
+- **Zeus** (`god-mode-zeus` skill — separate): the **dangerously** tier. Runs only via the runner with
+  `--dangerously-skip-permissions`, **never asks** (not even for critical/high-access actions — it decides
+  and goes), maximum autonomy. The catastrophe rails still hold (no moving money, no destroying real data
+  outside the task, no exfiltration, stay in the project). Reach for Zeus only when you accept full risk and
+  want it to run dark. **Default to normal GOD mode.**
 
 ## Manual stop
 The user can stop GOD mode at any time:

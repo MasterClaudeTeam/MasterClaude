@@ -64,8 +64,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`skills/security/`** — `sec-authz-review` · `sec-attacker-review` · `sec-injection` · `sec-authn-session` ·
   `sec-secrets-crypto` · `sec-ssrf-traversal` — review for vulnerabilities, front→back (OWASP/CWE, with fixes).
 - **`skills/workflows/`** — `wf-codebase-audit`, `wf-security-audit` — big, multi-step jobs.
-- **`skills/automation/`** — `god-mode` (an autonomous, resumable build that runs until you stop it,
-  surviving usage limits) · `scheduling` (cron/schtasks/launchd recurring unattended runs).
+- **`skills/automation/`** — `god-mode` (an autonomous, resumable build; asks only for the critical) ·
+  `god-mode-zeus` (the dangerously, never-ask tier) · `scheduling` (cron/schtasks/launchd recurring runs).
 
 ## How it works
 1. **Interview (grill-me).** Developer → want → purpose → project → environment — one sharp question at a
@@ -89,8 +89,13 @@ node .claude/skills/automation/god-mode/runner.mjs        # keeps going across u
 touch .master-claude/god-mode/STOP             # stop it (or Ctrl-C)
 ```
 The safety rails always hold: no production, secrets, money, or destructive actions without you, tests stay
-honest, and a manual stop always wins. Pair it with **scheduling** (`/master-claude:schedule`) for nightly
-sweeps, weekly audits, or a daily autonomous push on the backlog.
+honest, and a manual stop always wins. By default GOD mode **asks you about the genuinely critical /
+high-access calls** and defers the rest.
+
+Want it to run **dark** and never ask? **ZEUS** (`/master-claude:god-mode-zeus`, or `runner.mjs --zeus`) is
+the separate *dangerously* tier — it runs with `--dangerously-skip-permissions`, never pauses to ask, and
+pushes maximum autonomy, for when you accept full risk. (The catastrophe rails still hold.) Pair either with
+**scheduling** (`/master-claude:schedule`) for nightly sweeps, weekly audits, or a daily push on the backlog.
 
 ## Staying up to date
 MASTER CLAUDE keeps itself current — it's your guide to the best of Claude Code. Ask it **"what's new"**

@@ -10,9 +10,11 @@
 //
 // Usage:
 //   node .claude/skills/automation/god-mode/runner.mjs ["optional mission goal"]
+//   node .claude/skills/automation/god-mode/runner.mjs --zeus   # ZEUS: dangerously, never-ask tier
 //   touch .master-claude/god-mode/STOP      # stop it (or press Ctrl-C)
 //
 // Env (all optional):
+//   GOD_ZEUS         "1" = ZEUS mode (same as --zeus): forces --dangerously-skip-permissions, never asks
 //   GOD_CLAUDE_CMD   the CLI binary           (default: "claude")
 //   GOD_MODEL        pass --model <value>      (default: none → your CLI default)
 //   GOD_USE_CONTINUE "1" to add --continue (resume the same conversation; default: fresh each cycle,
@@ -45,6 +47,7 @@ const CMD = process.env.GOD_CLAUDE_CMD || 'claude';
 const MAX_CYCLES = Number(process.env.GOD_MAX_CYCLES || 0);
 const MAX_BACKOFF = Number(process.env.GOD_MAX_BACKOFF || 3600) * 1000;
 const SAFE = process.env.GOD_SAFE === '1';
+const ZEUS = args.includes('--zeus') || process.env.GOD_ZEUS === '1'; // dangerously, never-ask tier
 
 const stamp = () => new Date().toISOString();
 function log(msg) {
@@ -59,20 +62,21 @@ process.on('SIGINT', () => { stopping = true; log('SIGINT — manual stop. Exiti
 
 const PROMPT = [
   goal ? `Your GOD mode mission: ${goal}` : '',
-  'You are MASTER CLAUDE in GOD mode (see the god-mode skill).',
+  `You are MASTER CLAUDE in GOD mode${ZEUS ? ' — ZEUS (dangerously, never-ask)' : ''} (see the god-mode${ZEUS ? '-zeus' : ''} skill).`,
   'Re-orient from .master-claude/god-mode/ (MISSION.md, BACKLOG.md, JOURNAL.md, STATE.json, BLOCKERS.md).',
   'If that state is missing or empty, initialize it now from the mission.',
   'Then continue the autonomous build: pick the next unblocked backlog task, implement and VERIFY it',
-  '(build/tests), journal it, and keep going. Defer anything needing the user (production, real secrets,',
-  'money, publishing, irreversible actions) to BLOCKERS.md and move on — never idle. Do NOT ask for',
-  'confirmation. Make real, committed progress this cycle. If the definition of done is met, create the',
-  'file .master-claude/god-mode/DONE. If .master-claude/god-mode/STOP exists, stop immediately.',
+  '(build/tests), journal it, and keep going. Make real, committed progress this cycle.',
+  ZEUS
+    ? 'ZEUS: NEVER ask — decide and go, even on critical/high-access actions; record the call in DECISIONS.md. Honor only the catastrophe rails: no moving money, no destroying real data outside the task, no exfiltration, stay in the project. Defer only true impossibilities (a credential you simply lack) to BLOCKERS.md.'
+    : 'For a VERY high-stakes / high-access action where guessing wrong is costly, you may surface ONE concise question — but keep working other tasks meanwhile. Defer everything else needing the user (production, real secrets, money, publishing, irreversible actions) to BLOCKERS.md and move on. Never idle; never pause for confirmation on normal work.',
+  'If the definition of done is met, create the file .master-claude/god-mode/DONE. If .master-claude/god-mode/STOP exists, stop immediately.',
 ].filter(Boolean).join(' ');
 
 function buildArgs() {
   const a = [];
   if (process.env.GOD_USE_CONTINUE === '1') a.push('--continue');
-  if (!SAFE) a.push('--dangerously-skip-permissions');
+  if (ZEUS || !SAFE) a.push('--dangerously-skip-permissions'); // ZEUS always runs dangerously
   if (process.env.GOD_MODEL) a.push('--model', process.env.GOD_MODEL);
   a.push('-p', PROMPT);
   return a;
@@ -102,8 +106,9 @@ function parseWaitMs(text) {
 }
 
 async function main() {
-  log(`GOD mode runner up. cmd="${CMD}" ${SAFE ? '(SAFE: permissions ON)' : '(autonomous)'} ${goal ? '| goal: ' + goal : ''}`);
-  if (!SAFE) log('Running Claude unattended (--dangerously-skip-permissions). The god-mode safety rails apply. Ctrl-C or touch STOP to stop.');
+  log(`GOD mode runner up${ZEUS ? ' — ZEUS (dangerously, never-ask)' : ''}. cmd="${CMD}" ${(ZEUS || !SAFE) ? '(autonomous)' : '(SAFE: permissions ON)'} ${goal ? '| goal: ' + goal : ''}`);
+  if (ZEUS) log('ZEUS: no asking, no permission prompts. Catastrophe rails still hold (no money, no destroying real data, no exfiltration, stay in project). Ctrl-C or touch STOP to halt.');
+  else if (!SAFE) log('Running Claude unattended (--dangerously-skip-permissions). The god-mode safety rails apply. Ctrl-C or touch STOP to stop.');
   let cycle = 0, limitBackoff = 60_000, errBackoff = 30_000, fails = 0;
 
   while (!stopping) {

@@ -65,7 +65,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 | `guardrails/` | guardian, supplyguard, testmedic, debtradar, compactor, guardian-suite — keep the work honest & healthy |
 | `security/` | sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review — review for vulnerabilities, front→back |
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
-| `automation/` | **god-mode** (autonomous, resumable build that runs until you stop it, surviving usage limits), **scheduling** (cron/schtasks/launchd recurring unattended runs) |
+| `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs) |
 | `agents/` | **Sentinel** — the project cartographer; **security-auditor** — read-only security audit → `.security/` |
 
 New categories and skills land here over time (the project is community-driven) — so **discover, don't
@@ -130,12 +130,17 @@ the first idea, and don't dither.
 ## GOD mode & automation — run on your own
 When the user wants you to keep going without babysitting, you have two gears:
 - **GOD mode** (`god-mode` skill · `/master-claude:god-mode`) — autonomous, resumable build. Review the goal
-  (improve an existing project or build one from scratch), write a mission + backlog under
-  `.master-claude/god-mode/`, then execute **relentlessly without pausing for confirmation**, deferring
-  anything that needs the user (production, real secrets, money, irreversible actions) to a **BLOCKERS** list
-  and continuing on everything else. The bundled runner (`runner.mjs`) keeps it alive **across usage
-  limits** — it auto-resumes when usage returns; only a manual `STOP` ends it. Offer it on "build it and
-  don't stop", "auto mode", or any long unattended push.
+  (improve an existing project or build from scratch), write a mission + backlog under
+  `.master-claude/god-mode/`, then execute **relentlessly**. It's auto by default and never pauses on normal
+  work — but it **asks you about the genuinely critical / high-access calls** (when you're reachable) and
+  **defers** lesser blockers (production, real secrets, money, irreversible actions) to a **BLOCKERS** list,
+  always continuing on everything else. The bundled runner keeps it alive **across usage limits**
+  (auto-resumes; only a manual `STOP` ends it). Offer it on "build it and don't stop" / "auto mode".
+- **GOD mode: ZEUS** (`god-mode-zeus` skill · `/master-claude:god-mode-zeus`) — a **separate, dangerously**
+  tier: runs only via the runner with `--dangerously-skip-permissions`, **never asks** (decides and goes on
+  the critical calls too), maximum autonomy for a true run-dark session. The catastrophe rails still hold
+  (no money, no destroying real data, no exfiltration, stay in the project). **Default to normal GOD mode;**
+  reach for ZEUS only when the user accepts full risk.
 - **Scheduling** (`scheduling` skill · `/master-claude:schedule`) — recurring or one-off unattended runs via
   the OS scheduler (cron / schtasks / launchd): a nightly Sentinel sweep, a weekly security audit, a daily
   GOD mode push on the backlog.
@@ -183,7 +188,8 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | a security-sensitive feature, or pre-release | **wf-security-audit / security-auditor** | full front→back audit → `.security/` |
 | user asks for a security review / audit | **/master-claude:security** | runs the right security pass |
 | user asks what's new / wants the latest | **/master-claude:whats-new** | version + changelog + ecosystem news |
-| "build it and don't stop" / wants autonomy / a long unattended push | **god-mode** (`/master-claude:god-mode`) | relentless resumable build; auto-resumes past usage limits, only STOP halts it |
+| "build it and don't stop" / wants autonomy / a long unattended push | **god-mode** (`/master-claude:god-mode`) | relentless resumable build; asks only for the critical, auto-resumes past limits, only STOP halts it |
+| wants a fully unattended "run dark" session, accepts full risk | **god-mode-zeus** (`/master-claude:god-mode-zeus`) | the dangerously, never-ask max-autonomy tier |
 | wants a recurring / overnight / scheduled run | **scheduling** (`/master-claude:schedule`) | cron/schtasks/launchd unattended runs (sweeps, audits, GOD mode) |
 | an open-ended choice: architecture, approach, "what to build" | **brainstorm → decide** | diverge wide, converge on criteria, record the call |
 
