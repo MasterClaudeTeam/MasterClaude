@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Validate the MASTER CLAUDE skills repo: every skill/agent/command has valid frontmatter
 // (skills & agents need name + description; commands need description), the key docs exist,
-// and at least one skill is present. There is NO plugin manifest — MASTER CLAUDE is plain
-// markdown you copy into .claude/. Exit non-zero on any problem (used in CI).
+// and at least one skill is present. MASTER CLAUDE is plain markdown you copy into .claude/
+// (there are no manifests to validate). Exit non-zero on any problem (used in CI).
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';

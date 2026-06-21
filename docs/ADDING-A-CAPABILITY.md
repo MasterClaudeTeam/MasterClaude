@@ -23,8 +23,8 @@ and website stay accurate, and it actually ships. Nothing half-landed.
 - [ ] `node scripts/sync-check.mjs` (from this repo) reports **in sync**.
 
 ## 4. Ship it
-- [ ] Update the README team list on a new category. (No `plugin.json` to bump — MASTER CLAUDE is markdown;
-      users get the change by re-copying `skills/ agents/ commands/` into `.claude/`.)
+- [ ] Update the README team list on a new category. (Users get the change by re-copying
+      `skills/ agents/ commands/` into `.claude/`.)
 - [ ] Commit + **push** the skills repo (`aturzone/MasterClaude`).
 - [ ] Build + **deploy** the website (`bash infra/deploy.sh`); **verify live** (home 200, catalog count, the
       new item present).

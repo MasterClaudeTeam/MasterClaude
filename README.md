@@ -5,7 +5,7 @@ project, and assembles a tailored team — **Sentinel** the project cartographer
 understanding and guardrail specialists — then runs it on your work. It also keeps itself (and you) current
 with the newest Claude Code features.
 
-No account. No API key. No vault. **No plugin to install** — it's just markdown you drop into `.claude/`. Everything is local, plain text, and open.
+No account. No API key. No vault. It's just markdown you drop into `.claude/` — everything is local, plain text, and open.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Buy me a coffee in TON](https://img.shields.io/badge/Buy%20me%20a%20coffee-TON-0098EA.svg)](https://masterclaude.shop/donate)
@@ -14,9 +14,9 @@ No account. No API key. No vault. **No plugin to install** — it's just markdow
 
 ## What it is
 MASTER CLAUDE is a set of Claude Code **skills** and **agents** — all plain `.md` files, organized by
-category — plus a **leader** skill (`master-claude`) that ties them together. **There's no plugin to
-install:** you add the markdown to your project's `.claude/` folder (or your global `~/.claude/`) and it's
-live. Instead of installing a dozen tools you'll forget, you say "master claude" once — it figures out what
+category — plus a **leader** skill (`master-claude`) that ties them together. You add the markdown to your
+project's `.claude/` folder (or your global `~/.claude/`) and it's live. Instead of installing a dozen tools
+you'll forget, you say "master claude" once — it figures out what
 *this* project and *this* developer need, assembles the smallest team that helps, gets to work, and brings
 in more members the moment a need shows up.
 
@@ -24,15 +24,14 @@ in more members the moment a need shows up.
 **Claude Code ≥ 2.1.183** (the categorized skill folders rely on nested-skill discovery). Check with
 `claude --version`; if you're behind, run `claude update`.
 
-## Set up — no plugin, just markdown
+## Set up
 MASTER CLAUDE is `.md` files you drop into `.claude/`. Pick either path:
 
 **A. Let Claude Code set it up (easiest).** In your project, paste this to Claude Code:
 
-> I want to use MASTER CLAUDE (https://github.com/aturzone/MasterClaude) in this project. It's Claude Code
-> skills & agents as plain `.md` files — **NOT a plugin, so don't install a plugin.** Clone the repo, copy
-> its `skills/`, `agents/` and `commands/` folders into this project's `.claude/` directory, then load and
-> run the `master-claude` skill to set up my team.
+> I want to use MASTER CLAUDE (https://github.com/aturzone/MasterClaude) in this project. Clone the repo,
+> copy its `skills/`, `agents/` and `commands/` folders into this project's `.claude/` directory, then load
+> and run the `master-claude` skill to set up my team.
 
 **B. Manual (git).**
 ```bash

@@ -1,6 +1,6 @@
 ---
 name: guardian-suite
-description: "One switchboard for the whole suite. Activate or deactivate any Guardian plugin per project or globally, see status at a glance, and show active/inactive state right in the Claude Code status line."
+description: "One switchboard for the whole suite. Activate or deactivate any guardrail per project or globally, see status at a glance, and show active/inactive state right in the Claude Code status line."
 ---
 
 # Guardian Suite Control

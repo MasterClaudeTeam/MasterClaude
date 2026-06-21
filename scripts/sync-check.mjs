@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Maintainer tool: flag skills present in this plugin repo but missing from the (private) website catalog,
-// and vice-versa, so the showcase site never drifts from the plugin. Skips gracefully if the website
+// Maintainer tool: flag skills present in this skills repo but missing from the (private) website catalog,
+// and vice-versa, so the showcase site never drifts from the repo. Skips gracefully if the website
 // catalog isn't available (e.g. for outside contributors who only have this repo).
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,8 +22,8 @@ function walk(dir, out = []) {
   return out;
 }
 
-// Plugin ids = each skill folder name (holding SKILL.md) + each agent file basename.
-const pluginIds = new Set([
+// Repo ids = each skill folder name (holding SKILL.md) + each agent file basename.
+const repoIds = new Set([
   ...walk(path.join(ROOT, 'skills')).filter((p) => p.endsWith('SKILL.md')).map((p) => path.basename(path.dirname(p))),
   ...walk(path.join(ROOT, 'agents')).filter((p) => p.endsWith('.md')).map((p) => path.basename(p, '.md')),
 ]);
@@ -31,19 +31,19 @@ const catalogIds = new Set(
   fs.readdirSync(catalogDir).filter((d) => fs.existsSync(path.join(catalogDir, d, 'meta.json')))
 );
 
-// Intentional differences: the conductor itself isn't a catalog product; the bundled `grill-me`
+// Intentional differences: the leader itself isn't a catalog product; the bundled `grill-me`
 // skill corresponds to the catalog's `cap-grill-me`.
 const NOT_IN_CATALOG = new Set(['master-claude', 'grill-me']);
-const NOT_IN_PLUGIN = new Set(['cap-grill-me']);
+const NOT_IN_REPO = new Set(['cap-grill-me']);
 
-const missingFromCatalog = [...pluginIds].filter((id) => !catalogIds.has(id) && !NOT_IN_CATALOG.has(id));
-const missingFromPlugin = [...catalogIds].filter((id) => !pluginIds.has(id) && !NOT_IN_PLUGIN.has(id));
+const missingFromCatalog = [...repoIds].filter((id) => !catalogIds.has(id) && !NOT_IN_CATALOG.has(id));
+const missingFromRepo = [...catalogIds].filter((id) => !repoIds.has(id) && !NOT_IN_REPO.has(id));
 
-if (missingFromCatalog.length || missingFromPlugin.length) {
-  if (missingFromCatalog.length) console.error('✗ in plugin but MISSING from website catalog/:\n  ' + missingFromCatalog.join('\n  '));
-  if (missingFromPlugin.length) console.error('✗ in website catalog/ but MISSING from plugin skills/:\n  ' + missingFromPlugin.join('\n  '));
+if (missingFromCatalog.length || missingFromRepo.length) {
+  if (missingFromCatalog.length) console.error('✗ in repo but MISSING from website catalog/:\n  ' + missingFromCatalog.join('\n  '));
+  if (missingFromRepo.length) console.error('✗ in website catalog/ but MISSING from skills/:\n  ' + missingFromRepo.join('\n  '));
   console.error('\nAdd the missing catalog/<id>/{meta.json,content.md} (or the skill), regenerate catalog.json,');
   console.error('and follow docs/ADDING-A-CAPABILITY.md.');
   process.exit(1);
 }
-console.log(`✓ in sync: ${pluginIds.size} plugin skills ↔ ${catalogIds.size} catalog items`);
+console.log(`✓ in sync: ${repoIds.size} repo skills ↔ ${catalogIds.size} catalog items`);

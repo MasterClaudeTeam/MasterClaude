@@ -13,8 +13,8 @@ Claude Code **≥ 2.1.183** (the categorized skill folders use nested-skill disc
 `claude --version`; run `claude update` if you're behind.
 
 ## Repo layout
-There's **no plugin manifest** — MASTER CLAUDE is plain markdown. The three folders users copy into their
-`.claude/` are `skills/`, `agents/`, and `commands/`:
+MASTER CLAUDE is plain markdown. The three folders users copy into their `.claude/` are `skills/`,
+`agents/`, and `commands/`:
 ```
 skills/
   master-claude/SKILL.md     # the leader (entry point)
@@ -71,7 +71,7 @@ themselves (read the manifest/lockfile) rather than assume one.
 - Match the surrounding style; one focused job per skill.
 
 ## Test it locally
-There's no plugin — copy the markdown into a scratch project's `.claude/` and exercise your change:
+Copy the markdown into a scratch project's `.claude/` and exercise your change:
 ```bash
 mkdir -p /tmp/scratch/.claude && cd /tmp/scratch
 cp -r /path/to/MasterClaude/skills /path/to/MasterClaude/agents /path/to/MasterClaude/commands .claude/

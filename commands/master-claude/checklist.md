@@ -5,7 +5,7 @@ allowed-tools: Bash, Read, Glob
 As MASTER CLAUDE, help the maintainer land a capability without missing a step. $ARGUMENTS
 
 1. Read and print the checklist from `docs/ADDING-A-CAPABILITY.md`.
-2. If you're inside the plugin repo, run `node scripts/validate.mjs` and `node scripts/sync-check.mjs`, and
+2. If you're inside the skills repo, run `node scripts/validate.mjs` and `node scripts/sync-check.mjs`, and
    report what's green and what's missing.
 3. Call out the steps still pending for the current change — leader awareness, the website `catalog/<id>`,
-   regenerating `catalog.json`, pushing the plugin, and deploying + verifying the website — and offer to do them.
+   regenerating `catalog.json`, pushing the skills repo, and deploying + verifying the website — and offer to do them.

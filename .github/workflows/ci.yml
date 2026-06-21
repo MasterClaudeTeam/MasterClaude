@@ -8,5 +8,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Validate plugin manifests + skill/agent frontmatter
+      - name: Validate skill/agent/command frontmatter
         run: node scripts/validate.mjs
