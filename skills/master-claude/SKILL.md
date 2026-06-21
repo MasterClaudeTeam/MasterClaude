@@ -60,7 +60,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 
 | Category (`skills/<cat>/`) | What lives here |
 |---|---|
-| `planning/` | grill-me, cap-plan-first, cap-spec-smith, cap-decomposer — turn a fuzzy ask into a spec & plan |
+| `planning/` | grill-me, cap-brainstorm, cap-plan-first, cap-spec-smith, cap-decomposer — turn a fuzzy ask into a spec & plan |
 | `review/` | cap-self-review, cap-red-team — critique the diff and the design |
 | `understand/` | cap-explain-senior, cap-rubber-duck, codehistorian — explain, debug, and trace history |
 | `guardrails/` | guardian, supplyguard, testmedic, debtradar, compactor, guardian-suite — keep the work honest & healthy |
