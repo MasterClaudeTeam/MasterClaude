@@ -64,6 +64,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`skills/security/`** — `sec-authz-review` · `sec-attacker-review` · `sec-injection` · `sec-authn-session` ·
   `sec-secrets-crypto` · `sec-ssrf-traversal` — review for vulnerabilities, front→back (OWASP/CWE, with fixes).
 - **`skills/workflows/`** — `wf-codebase-audit`, `wf-security-audit` — big, multi-step jobs.
+- **`skills/automation/`** — `god-mode` (an autonomous, resumable build that runs until you stop it,
+  surviving usage limits) · `scheduling` (cron/schtasks/launchd recurring unattended runs).
 
 ## How it works
 1. **Interview (grill-me).** Developer → want → purpose → project → environment — one sharp question at a
@@ -71,6 +73,24 @@ category; each folder has a README that brainstorms what else belongs there (goo
 2. **Map.** Detects your stack and the gaps for *this* goal.
 3. **Assemble.** Picks a tailored team from the installed skills and explains why each fits.
 4. **Run.** Actually does the work with the team, and tells you what each member changed.
+
+## GOD mode — build until you say stop
+Hand MASTER CLAUDE a goal and let it run. **GOD mode** (`/master-claude:god-mode "<goal>"`) reviews the
+situation — improve an existing project or build one from scratch — writes a mission + prioritized backlog
+under `.master-claude/god-mode/`, then executes **relentlessly, without pausing for confirmation**. Anything
+that needs *you* — production, real secrets, money, publishing, irreversible actions — goes to a **BLOCKERS**
+list and it keeps working everything else; nothing idles.
+
+It's built to be unkillable except by you. State lives on disk, so it survives `/compact`, crashes, and
+reboots. For a true walk-away run, launch the bundled runner — it **auto-resumes after a usage limit** and
+stops only on a manual `STOP`:
+```bash
+node .claude/skills/god-mode/runner.mjs        # keeps going across usage limits
+touch .master-claude/god-mode/STOP             # stop it (or Ctrl-C)
+```
+The safety rails always hold: no production, secrets, money, or destructive actions without you, tests stay
+honest, and a manual stop always wins. Pair it with **scheduling** (`/master-claude:schedule`) for nightly
+sweeps, weekly audits, or a daily autonomous push on the backlog.
 
 ## Staying up to date
 MASTER CLAUDE keeps itself current — it's your guide to the best of Claude Code. Ask it **"what's new"**
