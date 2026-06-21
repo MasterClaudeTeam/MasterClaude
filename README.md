@@ -85,7 +85,7 @@ It's built to be unkillable except by you. State lives on disk, so it survives `
 reboots. For a true walk-away run, launch the bundled runner — it **auto-resumes after a usage limit** and
 stops only on a manual `STOP`:
 ```bash
-node .claude/skills/god-mode/runner.mjs        # keeps going across usage limits
+node .claude/skills/automation/god-mode/runner.mjs        # keeps going across usage limits
 touch .master-claude/god-mode/STOP             # stop it (or Ctrl-C)
 ```
 The safety rails always hold: no production, secrets, money, or destructive actions without you, tests stay

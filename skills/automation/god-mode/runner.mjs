@@ -9,7 +9,7 @@
 // Only a manual STOP (the STOP file or Ctrl-C) ends it. A usage limit is a pause, not a stop.
 //
 // Usage:
-//   node .claude/skills/god-mode/runner.mjs ["optional mission goal"]
+//   node .claude/skills/automation/god-mode/runner.mjs ["optional mission goal"]
 //   touch .master-claude/god-mode/STOP      # stop it (or press Ctrl-C)
 //
 // Env (all optional):

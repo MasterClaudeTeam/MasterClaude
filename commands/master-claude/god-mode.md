@@ -15,7 +15,7 @@ Follow the `god-mode` skill. In short:
 4. **Defer blockers, don't stop**: anything needing the user (production/deploys, real secrets/credentials,
    money, publishing/outbound, shared-git pushes, irreversible/destructive actions) → `BLOCKERS.md`, then
    keep working everything else. Never idle.
-5. Tell the user how to **keep it alive across usage limits** — `node .claude/skills/god-mode/runner.mjs`
+5. Tell the user how to **keep it alive across usage limits** — `node .claude/skills/automation/god-mode/runner.mjs`
    (auto-resumes after a limit) — and how to **stop** it: `touch .master-claude/god-mode/STOP` or Ctrl-C.
 
 Honor the god-mode **safety rails** at all times, keep tests honest, and leave a trail in `JOURNAL.md`.

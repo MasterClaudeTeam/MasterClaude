@@ -23,7 +23,7 @@ cd <project> && claude -p "<task>" --dangerously-skip-permissions >> .master-cla
 ```
 For a GOD mode session, schedule the runner instead:
 ```bash
-cd <project> && node .claude/skills/god-mode/runner.mjs >> .master-claude/schedule/<name>.log 2>&1
+cd <project> && node .claude/skills/automation/god-mode/runner.mjs >> .master-claude/schedule/<name>.log 2>&1
 ```
 Because the run is unattended it uses `--dangerously-skip-permissions` (or the GOD mode runner, which
 carries the god-mode safety rails). Tell the user that, and keep scheduled tasks scoped to safe work.
@@ -39,7 +39,7 @@ carries the god-mode safety rails). Tell the user that, and keep scheduled tasks
    mkdir -p .master-claude/schedule
    exec claude -p "your task here" --dangerously-skip-permissions >> ".master-claude/schedule/<name>.log" 2>&1
    ```
-   `chmod +x` it. (For GOD mode, `exec node .claude/skills/god-mode/runner.mjs` instead.)
+   `chmod +x` it. (For GOD mode, `exec node .claude/skills/automation/god-mode/runner.mjs` instead.)
 3. **Detect the OS and build the schedule command** (below). **Show the exact command and confirm before
    installing** — a scheduled job is persistent config.
 4. **Install it**, then **verify** it's registered (list, below) and tell the user where the logs go.
@@ -74,7 +74,7 @@ The `.cmd` launcher: `cd /d "C:\path\to\project" && claude -p "task" --dangerous
 - **Nightly health sweep** — `claude -p "Run /sentinel:sweep, then summarize new findings to .master-claude/schedule/sweep-report.md"` at 02:00.
 - **Weekly security audit** — `claude -p "Run the wf-security-audit workflow and write the report to .security/"` Mondays.
 - **Daily debt check** — `claude -p "Run debtradar; list the top 3 hotspots and open a plan for the worst"`.
-- **Daily GOD mode push** — `node .claude/skills/god-mode/runner.mjs` each morning for an hour
+- **Daily GOD mode push** — `node .claude/skills/automation/god-mode/runner.mjs` each morning for an hour
   (`GOD_MAX_CYCLES` or a `STOP` written by a paired "stop" schedule to bound it).
 - **One-off delayed task** — cron with a far-future single date, or `schtasks /SC ONCE /SD <date> /ST <time>`; clean it up after.
 

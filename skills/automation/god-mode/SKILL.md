@@ -139,13 +139,13 @@ repeats — stopping only when it sees the `STOP` or `DONE` sentinel. Tell the u
 
 ```bash
 # from the project root, after GOD mode is initialized:
-node .claude/skills/god-mode/runner.mjs
+node .claude/skills/automation/god-mode/runner.mjs
 #   STOP it anytime:   touch .master-claude/god-mode/STOP   (or Ctrl-C)
 #   It auto-resumes after a usage limit; only STOP/DONE end it.
 ```
 
 The runner uses the Claude CLI in autonomous mode, so warn the user it runs unattended — the safety rails
-above are what keep that safe. (Run `node .claude/skills/god-mode/runner.mjs --help` for options.)
+above are what keep that safe. (Run `node .claude/skills/automation/god-mode/runner.mjs --help` for options.)
 
 ## Manual stop
 The user can stop GOD mode at any time:
