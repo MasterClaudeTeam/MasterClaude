@@ -13,18 +13,21 @@ Claude Code **≥ 2.1.183** (the categorized skill folders use nested-skill disc
 `claude --version`; run `claude update` if you're behind.
 
 ## Repo layout
+There's **no plugin manifest** — MASTER CLAUDE is plain markdown. The three folders users copy into their
+`.claude/` are `skills/`, `agents/`, and `commands/`:
 ```
-.claude-plugin/{plugin,marketplace}.json   # manifests
 skills/
   master-claude/SKILL.md     # the leader (entry point)
   planning/   <skill>/SKILL.md   # spec & plan before code
   review/     <skill>/SKILL.md   # critique the diff & design
   understand/ <skill>/SKILL.md   # explain, debug, trace history
   guardrails/ <skill>/SKILL.md   # keep the work honest & healthy (the Guardian suite)
+  security/   <skill>/SKILL.md   # review for vulnerabilities, front→back (OWASP/CWE)
   workflows/  <skill>/SKILL.md   # big multi-step jobs
-agents/<name>.md             # subagents (Sentinel, the cartographer)
-commands/                    # slash commands (/master-claude, /master-claude:whats-new, /sentinel:*)
-hooks/                       # the Sentinel session nudge (a dep-free Node hook)
+agents/<name>.md             # subagents (Sentinel; security-auditor) — may nest in agents/<category>/
+commands/                    # slash commands (/master-claude:whats-new, /master-claude:security, /sentinel:*)
+hooks/                       # the optional Sentinel session nudge (a dep-free Node hook)
+SETUP.md                     # how it's installed (copy the three folders into .claude/)
 ```
 Each `skills/<category>/README.md` explains the category and **brainstorms what's missing** — the fastest
 way to find a good first contribution.
@@ -68,14 +71,14 @@ themselves (read the manifest/lockfile) rather than assume one.
 - Match the surrounding style; one focused job per skill.
 
 ## Test it locally
-Install the plugin into a scratch project and exercise your change:
+There's no plugin — copy the markdown into a scratch project's `.claude/` and exercise your change:
+```bash
+mkdir -p /tmp/scratch/.claude && cd /tmp/scratch
+cp -r /path/to/MasterClaude/skills /path/to/MasterClaude/agents /path/to/MasterClaude/commands .claude/
+claude     # then, in the session: master claude
 ```
-/plugin marketplace add ./MasterClaude     # from the repo's parent dir, or: add aturzone/MasterClaude
-/plugin install master-claude@masterclaude
-/reload-plugins
-```
-Then run `master claude` and confirm your skill is discovered and assembled when relevant; for the
-cartographer, run `/sentinel:map`, make a change, and `/sentinel:sweep`.
+Confirm your skill is discovered and assembled when relevant (nested skills need Claude Code ≥ 2.1.183);
+for the cartographer, run `/sentinel:map`, make a change, and `/sentinel:sweep`.
 
 ## How we say thanks — the monthly TON share ☕
 MASTER CLAUDE is funded by donations (a TON "buy me a coffee" widget at

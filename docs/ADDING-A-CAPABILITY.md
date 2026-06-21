@@ -3,7 +3,7 @@
 Every time we add or change a skill / agent / command, run this list so MASTER CLAUDE stays aware, the docs
 and website stay accurate, and it actually ships. Nothing half-landed.
 
-## 1. Build it (this plugin repo)
+## 1. Build it (this skills repo)
 - [ ] `skills/<category>/<id>/SKILL.md` (or `agents/<...>.md`) with valid frontmatter — `name`, a
       trigger-focused `description`, and `allowed-tools` / `tools`. New category? add `skills/<category>/README.md`.
 - [ ] Promote it in the category README (from "brainstorm" to "current members").
@@ -23,8 +23,9 @@ and website stay accurate, and it actually ships. Nothing half-landed.
 - [ ] `node scripts/sync-check.mjs` (from this repo) reports **in sync**.
 
 ## 4. Ship it
-- [ ] Bump `plugin.json` version; update the README team list on a new category.
-- [ ] Commit + **push** the plugin repo (`aturzone/MasterClaude`).
+- [ ] Update the README team list on a new category. (No `plugin.json` to bump — MASTER CLAUDE is markdown;
+      users get the change by re-copying `skills/ agents/ commands/` into `.claude/`.)
+- [ ] Commit + **push** the skills repo (`aturzone/MasterClaude`).
 - [ ] Build + **deploy** the website (`bash infra/deploy.sh`); **verify live** (home 200, catalog count, the
       new item present).
 - [ ] Notable addition → a short **blog** post.

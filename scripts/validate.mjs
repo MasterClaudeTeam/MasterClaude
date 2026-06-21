@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-// Validate the MASTER CLAUDE plugin: every manifest parses, every skill/agent has valid frontmatter
-// (name + description), and at least one skill exists. Exit non-zero on any problem (used in CI).
+// Validate the MASTER CLAUDE skills repo: every skill/agent/command has valid frontmatter
+// (skills & agents need name + description; commands need description), the key docs exist,
+// and at least one skill is present. There is NO plugin manifest — MASTER CLAUDE is plain
+// markdown you copy into .claude/. Exit non-zero on any problem (used in CI).
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
@@ -9,9 +11,9 @@ const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..'
 const problems = [];
 const need = (cond, msg) => { if (!cond) problems.push(msg); };
 
-for (const f of ['.claude-plugin/plugin.json', '.claude-plugin/marketplace.json', 'hooks/hooks.json']) {
-  try { JSON.parse(fs.readFileSync(path.join(ROOT, f), 'utf8')); }
-  catch (e) { problems.push(`BAD JSON ${f}: ${e.message}`); }
+// the repo must ship the setup docs so "give Claude Code the link" works
+for (const f of ['README.md', 'SETUP.md', 'LICENSE']) {
+  need(fs.existsSync(path.join(ROOT, f)), `missing ${f}`);
 }
 
 function walk(dir, out = []) {
@@ -31,16 +33,25 @@ function frontmatter(file) {
 
 const skills = walk(path.join(ROOT, 'skills')).filter((p) => p.endsWith('SKILL.md'));
 const agents = walk(path.join(ROOT, 'agents')).filter((p) => p.endsWith('.md'));
+const commands = walk(path.join(ROOT, 'commands')).filter((p) => p.endsWith('.md'));
 need(skills.length > 0, 'no skills found under skills/');
+
+// skills & agents: need name + description
 for (const f of [...skills, ...agents]) {
   const rel = path.relative(ROOT, f).replace(/\\/g, '/');
   const fm = frontmatter(f);
   need(fm, `no frontmatter: ${rel}`);
   if (fm) { need(fm.name, `no \`name\`: ${rel}`); need(fm.desc, `no \`description\`: ${rel}`); }
 }
+// commands: a description is enough (the name comes from the file path)
+for (const f of commands) {
+  const rel = path.relative(ROOT, f).replace(/\\/g, '/');
+  const fm = frontmatter(f);
+  need(fm && fm.desc, `command needs frontmatter \`description\`: ${rel}`);
+}
 
 if (problems.length) {
   console.error('✗ validation FAILED:\n  ' + problems.join('\n  '));
   process.exit(1);
 }
-console.log(`✓ valid: ${skills.length} skills, ${agents.length} agents, manifests OK`);
+console.log(`✓ valid: ${skills.length} skills, ${agents.length} agents, ${commands.length} commands`);

@@ -5,7 +5,7 @@ project, and assembles a tailored team — **Sentinel** the project cartographer
 understanding and guardrail specialists — then runs it on your work. It also keeps itself (and you) current
 with the newest Claude Code features.
 
-No account. No API key. No vault. Everything is local, plain text, and open.
+No account. No API key. No vault. **No plugin to install** — it's just markdown you drop into `.claude/`. Everything is local, plain text, and open.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Buy me a coffee in TON](https://img.shields.io/badge/Buy%20me%20a%20coffee-TON-0098EA.svg)](https://masterclaude.shop/donate)
@@ -13,30 +13,41 @@ No account. No API key. No vault. Everything is local, plain text, and open.
 ---
 
 ## What it is
-MASTER CLAUDE is a Claude Code **plugin**: focused **skills** organized by category, a **Sentinel** agent,
-and a **leader** skill that ties them together. Instead of installing a dozen tools you'll forget, you say
-"master claude" once — it figures out what *this* project and *this* developer need, assembles the smallest
-team that helps, gets to work, and brings in more members the moment a need shows up.
+MASTER CLAUDE is a set of Claude Code **skills** and **agents** — all plain `.md` files, organized by
+category — plus a **leader** skill (`master-claude`) that ties them together. **There's no plugin to
+install:** you add the markdown to your project's `.claude/` folder (or your global `~/.claude/`) and it's
+live. Instead of installing a dozen tools you'll forget, you say "master claude" once — it figures out what
+*this* project and *this* developer need, assembles the smallest team that helps, gets to work, and brings
+in more members the moment a need shows up.
 
 ## Requirements
 **Claude Code ≥ 2.1.183** (the categorized skill folders rely on nested-skill discovery). Check with
 `claude --version`; if you're behind, run `claude update`.
 
-## Quick start
-1. **Install** (in Claude Code):
-   ```
-   /plugin marketplace add aturzone/MasterClaude
-   /plugin install master-claude@masterclaude
-   ```
-2. **Run it** — in any project, say:
-   ```
-   master claude — set up my team for this project
-   ```
-   (or run `/master-claude`). It interviews you, maps the repo, and assembles your team.
-3. **See your team** any time: `/master-claude-team`.
+## Set up — no plugin, just markdown
+MASTER CLAUDE is `.md` files you drop into `.claude/`. Pick either path:
 
-> Manual install (fallback): `git clone https://github.com/aturzone/MasterClaude` then
-> `/plugin marketplace add ./MasterClaude` and `/plugin install master-claude@masterclaude`.
+**A. Let Claude Code set it up (easiest).** In your project, paste this to Claude Code:
+
+> I want to use MASTER CLAUDE (https://github.com/aturzone/MasterClaude) in this project. It's Claude Code
+> skills & agents as plain `.md` files — **NOT a plugin, so don't install a plugin.** Clone the repo, copy
+> its `skills/`, `agents/` and `commands/` folders into this project's `.claude/` directory, then load and
+> run the `master-claude` skill to set up my team.
+
+**B. Manual (git).**
+```bash
+git clone https://github.com/aturzone/MasterClaude /tmp/mc
+mkdir -p .claude && cp -r /tmp/mc/skills /tmp/mc/agents /tmp/mc/commands .claude/
+```
+Use `~/.claude/` instead of `.claude/` to enable it for **every** project. The optional Sentinel hook and
+full details are in **[SETUP.md](SETUP.md)**.
+
+**Then run it** — in any project, say:
+```
+master claude — set up my team for this project
+```
+(or `/master-claude`). It interviews you, maps the repo, and assembles your team. See your team any time
+with `/master-claude-team`.
 
 ## The team
 The leader picks a **minimal** subset per project — never all at once. Capabilities are organized by
@@ -66,7 +77,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
 MASTER CLAUDE keeps itself current — it's your guide to the best of Claude Code. Ask it **"what's new"**
 (or run `/master-claude:whats-new`) and it checks your Claude Code version, reads the official changelog,
 and flags the new features relevant to *your* work.
-- **Update the plugin:** `/plugin marketplace update masterclaude`, then `/reload-plugins`.
+- **Update MASTER CLAUDE:** just ask it to **"update yourself"** — it `git pull`s the repo and re-copies
+  `skills/ agents/ commands/` into `.claude/`. (Or do it by hand, same two commands as setup.)
 - **Update Claude Code:** `claude update`.
 
 ## Sentinel — the cartographer
