@@ -72,7 +72,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 | `guardrails/` | guardian, supplyguard, testmedic, cap-tdd, debtradar, compactor, guardian-suite — keep the work honest & healthy (incl. test-driven dev) |
 | `security/` | **core:** sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review · **depth:** sec-frontend, sec-api, sec-deps, sec-iac-cloud, sec-threat-model, sec-headers-config — review for vulnerabilities front→back (OWASP/CWE) |
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
-| `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs) |
+| `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs), **clone** (build the user a Telegram-fronted digital-twin assistant — immortal session, grows a private brain repo) |
 | `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **token-economy** (best output per token), **workspace-architect** (build the best `.claude/` workspace), **worktree-isolation** (parallel work without collisions) |
 | `meta/` | **writing-skills** — author/sharpen a MASTER CLAUDE skill so the archive keeps growing; **statusline-designer** — design a custom Claude Code status line for CLI users (gated, opt-in) |
 | `agents/` | **Sentinel** — the project cartographer; **security-auditor** — read-only security audit → `.security/` |
@@ -219,6 +219,7 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | "build it and don't stop" / wants autonomy / a long unattended push | **god-mode** (`/master-claude:god-mode`) | relentless resumable build; asks only for the critical, auto-resumes past limits, only STOP halts it |
 | wants a fully unattended "run dark" session, accepts full risk | **god-mode-zeus** (`/master-claude:god-mode-zeus`) | the dangerously, never-ask max-autonomy tier |
 | wants a recurring / overnight / scheduled run | **scheduling** (`/master-claude:schedule`) | cron/schtasks/launchd unattended runs (sweeps, audits, GOD mode) |
+| wants a personal assistant / "digital twin" / a clone that acts as them (e.g. on Telegram) | **clone** (`/master-claude:clone`) | builds a living twin — gated: asks for a bot token (env-only) + a private `clone` repo SSH; auto for known contacts, confirms sensitive/new, refuses the catastrophe red-lines |
 | starting in a new/unfamiliar project, or setup feels ad hoc | **workspace-architect** | builds the right lean `.claude/` for this project |
 | user asks for / wants a custom status line, or to customize their terminal/prompt | **statusline-designer** | gated & opt-in — confirm it's a terminal + that they want one before spending tokens; never volunteer it |
 | work splits into independent chunks / needs many files read / a fresh-eyes review | **subagent-orchestration** | orchestrator-worker delegation, parallel where it pays |

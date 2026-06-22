@@ -15,3 +15,9 @@ Thumbs.db
 .master-claude/
 .claude/settings.local.json
 .claude/master-claude.json
+
+# clone runtime state + secrets (NEVER commit)
+.clone/
+.env
+.env.*
+!.env.example

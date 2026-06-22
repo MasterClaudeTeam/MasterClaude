@@ -65,7 +65,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
   `sec-secrets-crypto` · `sec-ssrf-traversal` — review for vulnerabilities, front→back (OWASP/CWE, with fixes).
 - **`skills/workflows/`** — `wf-codebase-audit`, `wf-security-audit` — big, multi-step jobs.
 - **`skills/automation/`** — `god-mode` (an autonomous, resumable build; asks only for the critical) ·
-  `god-mode-zeus` (the dangerously, never-ask tier) · `scheduling` (cron/schtasks/launchd recurring runs).
+  `god-mode-zeus` (the dangerously, never-ask tier) · `scheduling` (cron/schtasks/launchd recurring runs) ·
+  `clone` (a Telegram-fronted digital-twin assistant — immortal session, grows a private brain repo).
 - **`skills/orchestration/`** — `subagent-orchestration` (delegate to subagents/teams) · `model-router`
   (pick a model per agent — Opus lead / Sonnet workers / Haiku scouts) · `token-economy` (best output per
   token — caveman, cheaper models, cache-warm) · `workspace-architect` (the best `.claude/` setup per
