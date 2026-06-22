@@ -59,8 +59,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`skills/review/`** — `cap-self-review` · `cap-red-team` — critique the diff and the design.
 - **`skills/understand/`** — `cap-explain-senior` · `cap-rubber-duck` · `codehistorian` — explain, debug,
   and trace history.
-- **`skills/guardrails/`** (the Guardian suite) — `guardian` · `supplyguard` · `testmedic` · `debtradar` ·
-  `compactor` · `guardian-suite` — keep the work honest and the codebase healthy.
+- **`skills/guardrails/`** (the Guardian suite) — `guardian` · `supplyguard` · `testmedic` · `cap-tdd` ·
+  `debtradar` · `compactor` · `guardian-suite` — keep the work honest and the codebase healthy.
 - **`skills/security/`** — `sec-authz-review` · `sec-attacker-review` · `sec-injection` · `sec-authn-session` ·
   `sec-secrets-crypto` · `sec-ssrf-traversal` — review for vulnerabilities, front→back (OWASP/CWE, with fixes).
 - **`skills/workflows/`** — `wf-codebase-audit`, `wf-security-audit` — big, multi-step jobs.
@@ -68,7 +68,7 @@ category; each folder has a README that brainstorms what else belongs there (goo
   `god-mode-zeus` (the dangerously, never-ask tier) · `scheduling` (cron/schtasks/launchd recurring runs).
 - **`skills/orchestration/`** — `subagent-orchestration` (delegate to subagents/teams) · `model-router`
   (pick a model per agent — Opus lead / Sonnet workers / Haiku scouts) · `workspace-architect` (the best
-  `.claude/` setup per project).
+  `.claude/` setup per project) · `worktree-isolation` (parallel work without collisions).
 
 ## How it works
 1. **Interview (grill-me).** Developer → want → purpose → project → environment — one sharp question at a
