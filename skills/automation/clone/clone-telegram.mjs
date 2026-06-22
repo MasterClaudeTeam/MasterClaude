@@ -4,8 +4,13 @@
 // committed (keep it in a gitignored .env). Node 18+ (uses built-in fetch + AbortController).
 //
 // Exports: getMe, getUpdates, sendMessage (auto-chunked), sendChatAction, call (low-level).
+//
+// Bridge: set TELEGRAM_API_BASE to a relay/reverse-proxy that CAN reach Telegram (e.g. your own server)
+// when api.telegram.org is blocked from where the clone runs. The token still lives only in .env; the relay
+// just forwards. An optional TELEGRAM_BRIDGE_SECRET is sent as the x-bridge-secret header so your relay can
+// reject anyone but the clone. See clone-telegram-bridge.mjs + BRIDGE.md.
 
-const API = 'https://api.telegram.org/bot';
+const DEFAULT_API_BASE = 'https://api.telegram.org';
 const DEFAULT_TIMEOUT_MS = 65_000;
 const MAX_LEN = 4000; // Telegram hard-limits a message at 4096; leave headroom for entities.
 
@@ -15,14 +20,22 @@ function token() {
   return t;
 }
 
+// Read lazily (NOT at module top level): this module is imported before the caller's loadEnv() runs, since
+// ESM imports are evaluated before the importing file's body — so reading here picks up values from .env.
+function apiBase() { return (process.env.TELEGRAM_API_BASE || DEFAULT_API_BASE).replace(/\/+$/, ''); }
+export function usingBridge() { return !!process.env.TELEGRAM_API_BASE; }
+
 // Low-level API call with a fetch timeout and automatic 429 (flood) back-off.
 export async function call(method, params = {}, { timeoutMs = DEFAULT_TIMEOUT_MS } = {}) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
-    const res = await fetch(`${API}${token()}/${method}`, {
+    const headers = { 'content-type': 'application/json' };
+    const secret = process.env.TELEGRAM_BRIDGE_SECRET; // optional shared secret for your relay (never logged)
+    if (secret) headers['x-bridge-secret'] = secret;
+    const res = await fetch(`${apiBase()}/bot${token()}/${method}`, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers,
       body: JSON.stringify(params),
       signal: ctrl.signal,
     });

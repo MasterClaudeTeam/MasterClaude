@@ -17,7 +17,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const DEFAULT_PATH = path.join(process.cwd(), '.clone', 'brain');
+// Populate process.env from the gitignored .env (same loader as clone-doctor/clone-runner) so values set
+// only in .env — CLONE_OWNER_NAME, CLONE_BRAIN_PATH — are honored without exporting them into the shell.
+function loadEnv(p) {
+  try {
+    for (const line of fs.readFileSync(p, 'utf8').split(/\r?\n/)) {
+      const m = line.match(/^\s*([A-Za-z0-9_]+)\s*=\s*(.*)\s*$/);
+      if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^["']|["']$/g, '');
+    }
+  } catch {}
+}
+loadEnv(path.join(process.cwd(), '.env'));
+
+const DEFAULT_PATH = process.env.CLONE_BRAIN_PATH || path.join(process.cwd(), '.clone', 'brain');
 
 function git(args, cwd) { return execFileSync('git', args, { cwd, encoding: 'utf8' }).trim(); }
 function tryGit(args, cwd) { try { return { ok: true, out: git(args, cwd) }; } catch (e) { return { ok: false, out: String((e.stderr || e.stdout || e.message || '')).trim() }; } }

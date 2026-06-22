@@ -122,14 +122,19 @@ function runClaudeTurn(text, chatId) {
     if (DRY) { resolve({ code: 0, out: `<<<REPLY>>>\n[dry-run] I received: ${text}\n<<<END>>>` }); return; }
     const args = ['--continue', '--dangerously-skip-permissions'];
     if (MODEL) args.push('--model', MODEL);
-    args.push('-p', buildPrompt(text, chatId));
+    args.push('-p'); // the prompt is fed on STDIN below — never as an argv string.
     let out = '';
+    // Feed the prompt via stdin (`… | claude -p`), NOT as `-p <prompt>`. On Windows `claude` is a .cmd shim,
+    // so spawn needs shell:true, and shell:true does NOT quote arguments — a spaced/multi-line prompt in argv
+    // gets split into many tokens (claude never receives the real prompt, and shell metacharacters in an
+    // owner's message would reach cmd.exe). Only space-free flags go in argv; the prompt goes on stdin.
     const child = spawn(CMD, args, { cwd: ROOT, shell: process.platform === 'win32' });
     const to = setTimeout(() => { try { child.kill(); } catch {} resolve({ code: -2, out: out + '\n[turn timed out]' }); }, TURN_TIMEOUT);
     child.stdout.on('data', (b) => (out += b.toString()));
     child.stderr.on('data', (b) => (out += b.toString()));
     child.on('error', (e) => { clearTimeout(to); resolve({ code: -1, out: out + '\nspawn error: ' + e.message }); });
     child.on('close', (code) => { clearTimeout(to); resolve({ code, out }); });
+    try { child.stdin.write(buildPrompt(text, chatId)); child.stdin.end(); } catch { /* 'error' event resolves it */ }
   });
 }
 

@@ -28,7 +28,11 @@ async function main() {
 
   // Telegram token + reachability
   if (!process.env.TELEGRAM_BOT_TOKEN) bad('token', 'TELEGRAM_BOT_TOKEN not set (put it in a gitignored .env)');
-  else { try { const me = await tg.getMe(); ok('telegram', `@${me.username}`); } catch (e) { bad('telegram', 'getMe failed: ' + e.message); } }
+  else {
+    const via = process.env.TELEGRAM_API_BASE ? ` via bridge ${process.env.TELEGRAM_API_BASE}` : '';
+    try { const me = await tg.getMe(); ok('telegram', `@${me.username}${via}`); }
+    catch (e) { bad('telegram', `getMe failed${via}: ` + e.message); }
+  }
 
   // owner allowlist
   process.env.CLONE_OWNER_CHAT_ID ? ok('owner', process.env.CLONE_OWNER_CHAT_ID)

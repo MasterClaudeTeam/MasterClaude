@@ -94,5 +94,5 @@ if (mode === '--install') {
   fs.appendFileSync(REG, `- ${new Date().toISOString()} removed clone daemon (${PLAT})\n`);
   console.log('Removed.');
 } else if (mode === '--status') {
-  try { console.log(sh(plan.status).trim()); } catch (e) { console.log('(status check failed: ' + e.message + ')'); }
+  try { console.log(sh(plan.status).trim()); } catch { console.log('(not registered)'); }
 } else showPlan();
