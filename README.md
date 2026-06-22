@@ -54,8 +54,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
 
 - **`agents/`** — **Sentinel** (project cartographer → `.sentinel/`) and the **Security Auditor**
   (read-only vulnerability audit → `.security/`). Read-only toward your source.
-- **`skills/planning/`** — `grill-me` · `cap-plan-first` · `cap-spec-smith` · `cap-decomposer` — turn a
-  fuzzy ask into a spec & plan.
+- **`skills/planning/`** — `grill-me` · `cap-brainstorm` · `cap-plan-first` · `cap-spec-smith` ·
+  `cap-decomposer` · `cap-execute-plan` — turn a fuzzy ask into a spec, plan & built result.
 - **`skills/review/`** — `cap-self-review` · `cap-red-team` — critique the diff and the design.
 - **`skills/understand/`** — `cap-explain-senior` · `cap-rubber-duck` · `codehistorian` — explain, debug,
   and trace history.
@@ -69,6 +69,7 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`skills/orchestration/`** — `subagent-orchestration` (delegate to subagents/teams) · `model-router`
   (pick a model per agent — Opus lead / Sonnet workers / Haiku scouts) · `workspace-architect` (the best
   `.claude/` setup per project) · `worktree-isolation` (parallel work without collisions).
+- **`skills/meta/`** — `writing-skills` — author or sharpen a MASTER CLAUDE skill, so the archive keeps growing.
 
 ## How it works
 1. **Interview (grill-me).** Developer → want → purpose → project → environment — one sharp question at a

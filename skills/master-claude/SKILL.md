@@ -60,7 +60,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 
 | Category (`skills/<cat>/`) | What lives here |
 |---|---|
-| `planning/` | grill-me, cap-brainstorm, cap-plan-first, cap-spec-smith, cap-decomposer — turn a fuzzy ask into a spec & plan |
+| `planning/` | grill-me, cap-brainstorm, cap-plan-first, cap-spec-smith, cap-decomposer, cap-execute-plan — turn a fuzzy ask into a spec, plan & built result |
 | `review/` | cap-self-review, cap-red-team — critique the diff and the design |
 | `understand/` | cap-explain-senior, cap-rubber-duck, codehistorian — explain, debug, and trace history |
 | `guardrails/` | guardian, supplyguard, testmedic, cap-tdd, debtradar, compactor, guardian-suite — keep the work honest & healthy (incl. test-driven dev) |
@@ -68,6 +68,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
 | `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs) |
 | `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **workspace-architect** (build the best `.claude/` workspace), **worktree-isolation** (parallel work without collisions) |
+| `meta/` | **writing-skills** — author/sharpen a MASTER CLAUDE skill so the archive keeps growing |
 | `agents/` | **Sentinel** — the project cartographer; **security-auditor** — read-only security audit → `.security/` |
 
 New categories and skills land here over time (the project is community-driven) — so **discover, don't
