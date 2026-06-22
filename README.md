@@ -67,8 +67,9 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`skills/automation/`** — `god-mode` (an autonomous, resumable build; asks only for the critical) ·
   `god-mode-zeus` (the dangerously, never-ask tier) · `scheduling` (cron/schtasks/launchd recurring runs).
 - **`skills/orchestration/`** — `subagent-orchestration` (delegate to subagents/teams) · `model-router`
-  (pick a model per agent — Opus lead / Sonnet workers / Haiku scouts) · `workspace-architect` (the best
-  `.claude/` setup per project) · `worktree-isolation` (parallel work without collisions).
+  (pick a model per agent — Opus lead / Sonnet workers / Haiku scouts) · `token-economy` (best output per
+  token — caveman, cheaper models, cache-warm) · `workspace-architect` (the best `.claude/` setup per
+  project) · `worktree-isolation` (parallel work without collisions).
 - **`skills/meta/`** — `writing-skills` — author or sharpen a MASTER CLAUDE skill, so the archive keeps growing.
 
 ## How it works

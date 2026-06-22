@@ -64,10 +64,10 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 | `review/` | cap-self-review, cap-red-team — critique the diff and the design |
 | `understand/` | cap-explain-senior, cap-rubber-duck, codehistorian — explain, debug, and trace history |
 | `guardrails/` | guardian, supplyguard, testmedic, cap-tdd, debtradar, compactor, guardian-suite — keep the work honest & healthy (incl. test-driven dev) |
-| `security/` | sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review — review for vulnerabilities, front→back |
+| `security/` | **core:** sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review · **depth:** sec-frontend, sec-api, sec-deps, sec-iac-cloud, sec-threat-model, sec-headers-config — review for vulnerabilities front→back (OWASP/CWE) |
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
 | `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs) |
-| `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **workspace-architect** (build the best `.claude/` workspace), **worktree-isolation** (parallel work without collisions) |
+| `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **token-economy** (best output per token), **workspace-architect** (build the best `.claude/` workspace), **worktree-isolation** (parallel work without collisions) |
 | `meta/` | **writing-skills** — author/sharpen a MASTER CLAUDE skill so the archive keeps growing |
 | `agents/` | **Sentinel** — the project cartographer; **security-auditor** — read-only security audit → `.security/` |
 
@@ -120,6 +120,10 @@ You have a real team and real tools; wield them deliberately, not timidly.
 - **Verify, always.** Build it, run the tests, exercise it — show proof, not claims.
 - **Keep state.** Use `.master-claude/` (team roster, decisions, GOD mode mission/journal) so context
   survives compaction and you can always resume.
+- **Run lean.** Best output *per token*: terse by default, don't redo work, isolate verbose work in
+  subagents, cheap models for grunt work (**model-router**), and offer **caveman**/**compactor** on long
+  runs — keep a rough eye on the burn and any budget. Optimize down to just before quality would drop, never
+  past it (**token-economy**).
 
 ## Brainstorm hard, then decide fast
 For anything open-ended — architecture, approach, naming, "what should we build", de-risking — don't grab
@@ -192,6 +196,12 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | login, JWT, session, or password-reset code | **sec-authn-session** | auth bypass / token forgery |
 | committing config / about to open-source | **sec-secrets-crypto** | leaked keys + weak crypto |
 | the server fetches a URL / path / upload from input | **sec-ssrf-traversal** | SSRF / path traversal |
+| an API endpoint / GraphQL resolver / serializer | **sec-api** | BOLA/BFLA, mass assignment, data exposure, rate limits |
+| browser/React code rendering untrusted data, or CSP/CORS | **sec-frontend** | XSS sinks, CSP, CSRF, CORS, postMessage |
+| a Dockerfile / k8s / Terraform / CI config | **sec-iac-cloud** | root containers, public buckets, broad IAM, secrets in IaC |
+| reviewing server/response headers, cookies, TLS, errors | **sec-headers-config** | HSTS/CSP/cookie flags, info leaks |
+| a new/updated dependency or lockfile to audit | **sec-deps** | known-vulnerable/typosquatted/unpinned deps |
+| designing a feature or system (not a diff yet) | **sec-threat-model** | STRIDE — assets, entry points, trust boundaries, mitigations |
 | a security-sensitive feature, or pre-release | **wf-security-audit / security-auditor** | full front→back audit → `.security/` |
 | user asks for a security review / audit | **/master-claude:security** | runs the right security pass |
 | user asks what's new / wants the latest | **/master-claude:whats-new** | version + changelog + ecosystem news |
@@ -201,6 +211,7 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | starting in a new/unfamiliar project, or setup feels ad hoc | **workspace-architect** | builds the right lean `.claude/` for this project |
 | work splits into independent chunks / needs many files read / a fresh-eyes review | **subagent-orchestration** | orchestrator-worker delegation, parallel where it pays |
 | spawning agents and unsure which model, or cost piling up | **model-router** | right model per agent (Opus/Sonnet/Haiku), turn-count beats price |
+| a long / output-heavy / expensive session, or a token budget set | **token-economy** (+ **caveman**) | best output per token — isolate verbose work, cheaper models, stay cache-warm, watch the burn |
 | an open-ended choice: architecture, approach, "what to build" | **brainstorm → decide** | diverge wide, converge on criteria, record the call |
 
 ## Customization
