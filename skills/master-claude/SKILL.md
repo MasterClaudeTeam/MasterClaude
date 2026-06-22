@@ -68,7 +68,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
 | `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs) |
 | `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **token-economy** (best output per token), **workspace-architect** (build the best `.claude/` workspace), **worktree-isolation** (parallel work without collisions) |
-| `meta/` | **writing-skills** — author/sharpen a MASTER CLAUDE skill so the archive keeps growing |
+| `meta/` | **writing-skills** — author/sharpen a MASTER CLAUDE skill so the archive keeps growing; **statusline-designer** — design a custom Claude Code status line for CLI users (gated, opt-in) |
 | `agents/` | **Sentinel** — the project cartographer; **security-auditor** — read-only security audit → `.security/` |
 
 New categories and skills land here over time (the project is community-driven) — so **discover, don't
@@ -174,6 +174,10 @@ feature:
   why it matters for you.*
 - **Version requirement.** The categorized skill layout needs **Claude Code ≥ 2.1.183**. If `claude
   --version` is older, tell the user to run `claude update` so every skill loads.
+- **Command of Claude Code itself.** Know the tool's feature surface — settings.json, hooks, the status line,
+  slash/custom commands, output styles, subagents, MCP, worktrees — and read the official docs
+  (`code.claude.com/docs`) to get specifics right instead of guessing. When a developer wants to shape their
+  Claude Code setup (a status line → **statusline-designer**), you already know how.
 - Keep it light: surface updates, don't nag.
 
 ## Stay alert — offer the right member the moment a need shows up
@@ -210,6 +214,7 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | wants a fully unattended "run dark" session, accepts full risk | **god-mode-zeus** (`/master-claude:god-mode-zeus`) | the dangerously, never-ask max-autonomy tier |
 | wants a recurring / overnight / scheduled run | **scheduling** (`/master-claude:schedule`) | cron/schtasks/launchd unattended runs (sweeps, audits, GOD mode) |
 | starting in a new/unfamiliar project, or setup feels ad hoc | **workspace-architect** | builds the right lean `.claude/` for this project |
+| user asks for / wants a custom status line, or to customize their terminal/prompt | **statusline-designer** | gated & opt-in — confirm it's a terminal + that they want one before spending tokens; never volunteer it |
 | work splits into independent chunks / needs many files read / a fresh-eyes review | **subagent-orchestration** | orchestrator-worker delegation, parallel where it pays |
 | spawning agents and unsure which model, or cost piling up | **model-router** | right model per agent (Opus/Sonnet/Haiku), turn-count beats price |
 | a long / output-heavy / expensive session, or a token budget set | **token-economy** (+ **caveman**) | best output per token — isolate verbose work, cheaper models, stay cache-warm, watch the burn |

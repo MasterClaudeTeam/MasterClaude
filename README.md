@@ -70,7 +70,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
   (pick a model per agent — Opus lead / Sonnet workers / Haiku scouts) · `token-economy` (best output per
   token — caveman, cheaper models, cache-warm) · `workspace-architect` (the best `.claude/` setup per
   project) · `worktree-isolation` (parallel work without collisions).
-- **`skills/meta/`** — `writing-skills` — author or sharpen a MASTER CLAUDE skill, so the archive keeps growing.
+- **`skills/meta/`** — `writing-skills` (author or sharpen a MASTER CLAUDE skill) · `statusline-designer`
+  (design a custom Claude Code status line for CLI users — gated, opt-in) — so the archive keeps growing.
 
 ## How it works
 1. **Interview (grill-me).** Developer → want → purpose → project → environment — one sharp question at a
