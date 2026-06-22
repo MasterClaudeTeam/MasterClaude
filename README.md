@@ -57,8 +57,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`skills/planning/`** — `grill-me` · `cap-brainstorm` · `cap-plan-first` · `cap-spec-smith` ·
   `cap-decomposer` · `cap-write-plan` · `cap-execute-plan` — fuzzy ask → spec → plan → built result.
 - **`skills/review/`** — `cap-self-review` · `cap-red-team` — critique the diff and the design.
-- **`skills/understand/`** — `cap-explain-senior` · `cap-rubber-duck` · `codehistorian` — explain, debug,
-  and trace history.
+- **`skills/understand/`** — `cap-explain-senior` · `cap-rubber-duck` · `codehistorian` · `repo-map`
+  (a ranked code map for token-cheap navigation) — explain, debug, trace history, map the codebase.
 - **`skills/guardrails/`** (the Guardian suite) — `guardian` · `supplyguard` · `testmedic` · `cap-tdd` ·
   `debtradar` · `compactor` · `guardian-suite` — keep the work honest and the codebase healthy.
 - **`skills/security/`** — `sec-authz-review` · `sec-attacker-review` · `sec-injection` · `sec-authn-session` ·

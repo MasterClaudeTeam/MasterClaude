@@ -62,7 +62,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 |---|---|
 | `planning/` | grill-me, cap-brainstorm, cap-plan-first, cap-spec-smith, cap-decomposer, cap-write-plan, cap-execute-plan — fuzzy ask → spec → plan → built result |
 | `review/` | cap-self-review, cap-red-team — critique the diff and the design |
-| `understand/` | cap-explain-senior, cap-rubber-duck, codehistorian — explain, debug, and trace history |
+| `understand/` | cap-explain-senior, cap-rubber-duck, codehistorian, repo-map — explain, debug, trace history, and map the codebase |
 | `guardrails/` | guardian, supplyguard, testmedic, cap-tdd, debtradar, compactor, guardian-suite — keep the work honest & healthy (incl. test-driven dev) |
 | `security/` | **core:** sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review · **depth:** sec-frontend, sec-api, sec-deps, sec-iac-cloud, sec-threat-model, sec-headers-config — review for vulnerabilities front→back (OWASP/CWE) |
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
@@ -189,6 +189,7 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | flaky/weakened tests, "done" without verifying | **testmedic / guardian** | reliability + verification guardrails |
 | a refactor with no clear target | **debtradar** | ranks hotspots by churn × complexity |
 | "why is this code like this?" / a regression | **codehistorian** | git archaeology |
+| new to a big/unfamiliar repo, or "where is X / how's this laid out" | **repo-map** | ranked map — jump to the load-bearing files, don't trawl |
 | a new dependency being added | **supplyguard** | blocks hallucinated/typosquatted/vulnerable deps |
 | code touches auth, permissions, or roles | **sec-authz-review** | IDOR/BOLA/privesc — the #1 web risk |
 | an endpoint fetches/mutates a resource by id | **sec-authz-review** | object-level authz (BOLA/IDOR) |

@@ -18,6 +18,19 @@ running alongside MASTER CLAUDE. The leader knows these and will recommend the r
 > points to [Alireza Rezvani's skills aggregator](https://github.com/alirezarezvani/claude-skills), which
 > **re-hosts** Matt Pocock's `grill-me` — the canonical upstream is `mattpocock/skills` above.
 
+## Codebase graph / repo-map (optional MCP power-ups)
+MASTER CLAUDE ships a zero-dependency **`repo-map`** skill (a ranked structure map via Grep/Glob) plus
+**Sentinel** (the architectural map). For a *true* AST/LSP code graph — symbol-level retrieval, real
+call/impact edges, incremental sync — you need an MCP server (beyond plain markdown). Good ones to run
+alongside:
+- **[Aider's repository map](https://aider.chat/docs/repomap.html)** — the original tree-sitter + PageRank
+  ranked map (built into Aider; the concept our `repo-map` approximates).
+- **[code-graph-mcp](https://github.com/sdsrss/code-graph-mcp)** / **[CodeGraph](https://github.com/colbymchenry/codegraph)**
+  — a local AST graph (call graph, impact analysis, dead-code) exposed to Claude Code over MCP.
+- **[Serena](https://github.com/oraios/serena)** — LSP-powered symbol-level navigation and edits.
+
+The leader points you here when a project is big enough that grep-and-read gets expensive.
+
 ## Primary sources we build from
 - Anthropic — [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
 - Anthropic — [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
