@@ -32,6 +32,23 @@ Repeat one behavior at a time. Small loops; commit at green.
 - **Never weaken a test to go green.** If a test is hard to pass, that's signal — fix the code or the design,
   not the test. (Guardian enforces this.)
 - **For a bug:** first write the test that **reproduces** it (RED), then fix until green — now it can't regress.
+- **Delete means delete.** Code written *before* its test gets **deleted** and re-implemented from the test —
+  not kept "as reference," not adapted. (Violating the *letter* of these rules is violating the *spirit* —
+  no "I'm following the spirit" dodge.)
+
+## The excuses — and the reality
+Under pressure you'll hear these; they're all rationalizations:
+| "…" | reality |
+|---|---|
+| too simple to test | simple code breaks too — it's where assumptions hide |
+| I'll test after | a test that passes the moment you write it proves nothing |
+| same goals either way | *after* answers "what does this do"; *first* answers "what should it do" |
+| already tested manually | ad-hoc, no record, can't re-run, won't catch regressions |
+| deleting this code is wasteful | sunk cost; keeping it = testing-after by another name |
+| it's hard to test | hard-to-test = hard-to-use — fix the design, not the test |
+
+**Red flags — stop and start over:** production code written before a test · a test that passed on first
+run · you can't say *why* it failed · "this case is different because…" · "I'll add tests later."
 
 ## When to use it / when not
 **Use** for logic with specifiable behavior: parsers, calculations, validation, state machines, API
@@ -39,8 +56,11 @@ contracts, and **every bug fix**. **Skip** (or test after) for throwaway spikes,
 exploration, or one-off scripts — match the rigor to the stakes.
 
 ## Verify honestly
-Green doesn't mean done — make sure the tests actually exercise the real behavior (no mocked-away logic, no
-tautologies). Pair with **guardian** (blocks weakened/skipped tests) and **testmedic** (flaky suites).
+"Green" means the **whole suite** stays green with **pristine output** (no new warnings/errors), not just
+the new test passing. Make sure the tests exercise real behavior, not mocks: **assert on the component's
+behavior, not the mock's**; a mock must mirror the *full* real schema (a partial mock missing a field
+something downstream needs is a classic silent bug); never add test-only methods to production code. Pair
+with **guardian** (blocks weakened/skipped tests) and **testmedic** (flaky suites).
 
 ---
 *Credits:* strict red-green-refactor as an enforced discipline is core to **superpowers**

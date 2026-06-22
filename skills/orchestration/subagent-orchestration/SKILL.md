@@ -58,6 +58,22 @@ one reviewer for spec-compliance, one for code-quality; batch the fixes into a f
 reviewer to confirm. Tell reviewers to flag only real correctness/requirement gaps (a reviewer told to
 "find problems" always finds some — that invites over-engineering). **If you can't verify it, don't ship it.**
 
+## Run it like a loop (not a one-shot)
+- **Worker return contract.** Require each worker to end with a status: `DONE` · `DONE_WITH_CONCERNS` ·
+  `NEEDS_CONTEXT` (re-dispatch the *same* worker with the missing piece) · `BLOCKED` (assess — if the *plan*
+  is wrong, escalate to the user; don't blind-retry). The status decides your next move.
+- **Hand off via files, not chat.** Give each worker a short brief; have it write its full report to a named
+  file (`task-N-report.md`) and return only status + commit range + a one-line test summary + concerns.
+  Reviewers/fix-agents read & append that file. This is the fix for your own "workers re-bloat my context" trap.
+- **Pre-flight the plan once.** Before task 1, scan the whole task set for contradictions/conflicts and
+  surface them to the user in one batch — don't discover them mid-run.
+- **Reviewer hygiene.** Copy the binding constraints **verbatim** into the reviewer prompt; hand the diff
+  **as a file**; don't pre-rate severity or name what to ignore; don't ask it to re-run tests already run.
+  Dispatch fixes for **Critical/Important** only; log **Minor** for the final whole-branch pass (top model, explicit).
+- **Keep a durable ledger.** Append `Task N: done (<base7>..<head7>, review clean)` to a tracked file the
+  instant a task passes. After a compaction/restart, trust the ledger + `git log` and **never re-dispatch a
+  completed task**. (Essential for long GOD-mode runs.)
+
 ## Economics (be honest about cost)
 A subagent run costs more tokens than inline; a full multi-agent push can be ~10–15×. Token spend explains
 most of the quality gain — so **only go multi-agent when the task's value justifies it.** Pair this with

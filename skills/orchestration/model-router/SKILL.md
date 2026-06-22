@@ -29,6 +29,15 @@ option): `opus` · `sonnet` · `haiku` · `fable` · a full id · or `inherit` (
 wall-clock — than a stronger fast model that nails it once. When unsure between two tiers for real work,
 pick the stronger one; only drop to Haiku for genuinely mechanical tasks.
 
+**Two rules that stop silent overspend:**
+- **Least powerful that suffices.** Default a role *down* to the cheapest tier that can actually do it — the
+  turn-count rule overrides only for genuine reasoning work. (One axis decides up, the other down.)
+- **Always set the model on a dispatch.** An omitted model inherits the *session* default (often Opus) — so
+  a grunt task silently runs on the priciest tier. Name the model every time.
+- **Implementation tier by signal:** 1–2 files + a complete spec → cheapest; multi-file / integration → mid;
+  design judgment or broad-codebase reasoning → top. Never drop a **reviewer** (or an implementer working
+  from prose, not a precise spec) below the mid tier.
+
 ## Also dial `effort`
 Independently of the model, set reasoning **effort** per subagent (`low`/`medium`/`high`/`xhigh`/`max`).
 Use `low` for cheap mechanical stages; reserve `high`+ for the hardest verify/judge/synthesis stages.

@@ -55,7 +55,7 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`agents/`** — **Sentinel** (project cartographer → `.sentinel/`) and the **Security Auditor**
   (read-only vulnerability audit → `.security/`). Read-only toward your source.
 - **`skills/planning/`** — `grill-me` · `cap-brainstorm` · `cap-plan-first` · `cap-spec-smith` ·
-  `cap-decomposer` · `cap-execute-plan` — turn a fuzzy ask into a spec, plan & built result.
+  `cap-decomposer` · `cap-write-plan` · `cap-execute-plan` — fuzzy ask → spec → plan → built result.
 - **`skills/review/`** — `cap-self-review` · `cap-red-team` — critique the diff and the design.
 - **`skills/understand/`** — `cap-explain-senior` · `cap-rubber-duck` · `codehistorian` — explain, debug,
   and trace history.

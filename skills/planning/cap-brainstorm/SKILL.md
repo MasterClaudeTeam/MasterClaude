@@ -12,7 +12,8 @@ allowed-tools: Read, Grep, Glob, Bash, Task
 # Brainstorm — diverge wide, then decide
 
 Open-ended problems die two ways: grabbing the first idea, or dithering forever. This skill does neither —
-it widens the space, then commits.
+it widens the space, then commits. And **no project is "too simple to need a moment of design"** — that's
+exactly where an unexamined assumption wastes the most work. Brainstorm anyway, briefly.
 
 ## 1. Frame
 State the real question + the constraints in one or two lines. Explore the repo/context first (grep/read)
@@ -37,8 +38,11 @@ the assumptions each option rides on.
 
 ## 5. Hand off — an artifact, not just chat
 End with a short written outcome: the decision, the options considered, the rejected ones + why, and the
-open risks. Save it (`.master-claude/decisions.md` or a design note) and, if it's build-bound, pass it to
-**cap-spec-smith** / **cap-plan-first**. A brainstorm that vanishes into chat history was half-wasted.
+open risks. Before you save it, **scan it once** for unresolved TBDs, internal contradictions, and scope
+that won't fit one plan (if it spans independent subsystems, stop and **cap-decomposer** first). Save it
+(`.master-claude/decisions.md` or a design note). **Gate:** don't pass it to **cap-spec-smith** /
+**cap-plan-first** / any build skill until the user gives an explicit yes on the decision. A brainstorm
+that vanishes into chat history — or slides into code unapproved — was half-wasted.
 
 Be a sparring partner, not a yes-man: push back, surface the option the user didn't consider, and say when
 their favorite is the wrong call — with the reason.

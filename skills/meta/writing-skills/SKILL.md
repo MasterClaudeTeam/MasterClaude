@@ -41,6 +41,26 @@ The methodology, written as instructions ("You are…", "When X, do Y"), with sh
    list it in `docs/ECOSYSTEM.md`. Re-implement the *idea*; don't copy their files.
 6. **Make it honest.** A skill shapes *how* you work — it never overrides the user or safety.
 
+## Match the form to the failure (the non-obvious part)
+Pick the skill's *shape* from how an agent fails *without* it — the wrong shape backfires:
+| Baseline failure | Right form | Wrong form |
+|---|---|---|
+| skips/violates a rule under pressure | a **prohibition** + a rationalization table + red-flags | soft "try to…" guidance |
+| output is the wrong shape (bloated, buried verdict) | a **positive recipe/contract**: what the output IS, in order | prohibitions (here they trend *worse* than no guidance) |
+| omits a required element | a **structural REQUIRED slot** in the template | prose reminders |
+| behaviour should be conditional | a rule **keyed to an observable signal** | an unconditional rule + exemptions |
+
+Two iron rules: **no nuance clauses** ("don't X unless…" reopens negotiation) and **exemptions don't scope**
+("doesn't apply to code blocks" still suppresses code blocks — restructure instead).
+
+## Baseline-first, and bulletproof the disciplines
+The honest test of a discipline skill: run the scenario **without** it and record the *verbatim*
+rationalizations — then write the minimal skill that answers **those**, and re-test until it holds (this
+applies to *edits* too). If a no-guidance control doesn't even exhibit the failure, don't write the guidance.
+To harden a rule-enforcing skill: close every loophole explicitly ("delete means delete"), add the meta-line
+*violating the letter is violating the spirit*, build a **rationalization table** + a **red-flags** list from
+the real excuses, and put the violation *symptoms* into the description so it fires.
+
 ## Pressure-test it
 Before shipping, imagine the situations where it *should* fire and check the `description` would catch them;
 imagine an agent under time pressure and check the skill's rules are unambiguous enough to hold. If you can,

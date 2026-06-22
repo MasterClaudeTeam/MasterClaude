@@ -24,6 +24,15 @@ Underneath the conversation, drive a real method — never guess-and-patch:
 4. **Verify the cause, not the symptom** — prove it by making the bug appear/disappear on command. Only
    then fix — and add a test that reproduces it (see **cap-tdd**) so it can't regress.
 
+**Two hard rules:**
+- **No fix before root cause.** Don't even *propose* a fix until you've investigated. Start by reading the
+  error/stack trace **completely** (it often names the exact line) and checking **what changed recently**
+  (git diff, new deps, config, env) — usually the fastest path to the culprit. In layered systems, log data
+  in/out at each boundary to find *which* layer breaks, then dig there.
+- **After ~3 failed fixes, stop and question the architecture.** If each fix reveals new coupling, needs a
+  big refactor, or spawns new symptoms, the *approach* is wrong — escalate to the user, don't attempt fix #4.
+  ("It's just flaky/environmental" is, ~19 times in 20, an incomplete investigation.)
+
 Only once the evidence (or the user) spots it, summarize the **root cause** in one or two lines — the *why*,
 not just the *where*. Patient, pointed, never lecturing.
 

@@ -18,6 +18,11 @@ two failure modes: drifting from the plan, or barrelling past a broken step.
 - You need an **approved** plan (from `cap-plan-first` / `cap-decomposer` / `grill-me`). If there isn't one,
   make one first — don't improvise a big build.
 - Confirm the **definition of done** and the **verify command** (how you'll prove each step works).
+- **Read the whole plan first and critique it** — surface gaps/contradictions/unclear steps to the user
+  *before* task 1; don't execute a plan you don't believe in.
+- **Branch safety:** if you're on `main`/a shared branch, switch to a working branch first (or get explicit
+  consent). For a large, independent-task plan, prefer **subagent-orchestration** (a fresh implementer per
+  task); keep inline execution for small ones.
 
 ## The loop (one task at a time)
 1. **Take the next task** in order; respect dependencies. State what you're about to do in a line.
@@ -36,6 +41,14 @@ two failure modes: drifting from the plan, or barrelling past a broken step.
 - Don't weaken a test or skip verification to "make progress." Green means green (Guardian holds here).
 - If you can't verify a step locally, say so explicitly rather than claiming it's done.
 - Keep the trail visible so the user can follow without re-reading the diff.
+
+## Stop and ask · then finish the branch
+- **Stop and ask** (don't guess) on: a missing dependency, a verification that fails repeatedly, an
+  instruction you don't understand, or a real plan gap.
+- **Check against the plan:** verify each step against its stated **expected output**, not just "exit 0";
+  before a task, confirm its *Consumes* interfaces actually exist from earlier tasks.
+- **Finish the branch.** When the last task is green: run the **full** suite once more, summarize what
+  shipped, and offer the wrap-up (open a PR / merge / delete the branch) — don't just stop at the last commit.
 
 ## vs. GOD mode
 This is **supervised**: it checkpoints and expects you nearby. For a long **unattended** run that defers

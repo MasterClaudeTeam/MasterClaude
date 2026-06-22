@@ -23,7 +23,19 @@ without stepping on each other, and a dead-end spike is discarded by removing a 
 
 *Not needed* for read-only parallel work (research/review) — those don't write, so they can't collide.
 
-## How
+## Before you create one (don't nest, don't fight the harness)
+1. **Already isolated?** Compare `git rev-parse --git-dir` vs `--git-common-dir` — if they differ (and
+   you're not in a submodule), you're **already in a worktree** → skip creation, just use the branch.
+   A worktree inside a worktree is the #1 mistake.
+2. **Prefer a native worktree tool.** If your harness exposes one (e.g. **`EnterWorktree`** / a `/worktree`
+   command), use it — hand-rolling `git worktree add` when a managed tool exists creates phantom state the
+   harness can't track. Fall back to raw git only when there's no native tool.
+3. **Ignore-check first.** Before adding a repo-local dir (prefer a hidden `.worktrees/`), confirm it's
+   git-ignored (`git check-ignore -q`); if not, add it to `.gitignore` and commit before creating.
+4. **Clean baseline.** After creating + installing deps (npm/cargo/pip/go per the stack), run the tests
+   once — if already red, report and ask, so later failures are attributable to the new work.
+
+## How (raw git fallback)
 ```bash
 # one worktree per task, each on its own branch, all sharing the same repo/history
 git worktree add ../wt-feature-x -b feature-x      # new branch in a sibling dir
