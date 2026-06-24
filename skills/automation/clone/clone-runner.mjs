@@ -5,7 +5,7 @@
 //   • long-polls getUpdates, persisting the offset BEFORE handling (dedupe = at-least-once)
 //   • THREE roles, resolved per chat:
 //       – OWNER   (CLONE_OWNER_CHAT_ID): full access; deterministic commands (/inbox /approve /reject
-//         /health /whoami) handled inline; free chat → a fresh `claude -p --continue` turn.
+//         /health /whoami) handled inline; free chat → a fresh `claude -p` turn (brain-backed, no shared session).
 //       – CONTACT (authenticated): a whitelisted person who proved their number via Telegram
 //         share-contact. Gets a contact-SCOPED claude turn in the owner's voice. Per-contact
 //         confidentiality. Any real ACTION / commitment / sensitive / romantic matter is NEVER done
@@ -233,7 +233,10 @@ function buildContactPrompt(text, sess) {
 function runClaudeTurn(prompt, stub) {
   return new Promise((resolve) => {
     if (DRY) { resolve({ code: 0, out: stub || `<<<REPLY>>>\n[dry-run]\n<<<END>>>` }); return; }
-    const args = ['--continue', '--dangerously-skip-permissions'];
+    // FRESH process per turn — deliberately NOT `--continue`. Continuity + per-contact confidentiality come
+    // from the brain/journal on disk (the prompt re-orients from it every turn). A shared claude session
+    // would bleed one contact's context into another — and into any unrelated session in this cwd.
+    const args = ['--dangerously-skip-permissions'];
     if (MODEL) args.push('--model', MODEL);
     args.push('-p'); // the prompt is fed on STDIN below — never as an argv string.
     let out = '';
