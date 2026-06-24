@@ -70,6 +70,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 | `review/` | cap-self-review, cap-red-team — critique the diff and the design |
 | `understand/` | cap-explain-senior, cap-rubber-duck, codehistorian, repo-map — explain, debug, trace history, and map the codebase |
 | `guardrails/` | guardian, supplyguard, testmedic, cap-tdd, debtradar, compactor, guardian-suite — keep the work honest & healthy (incl. test-driven dev) |
+| `frontend/` | fe-design-system, fe-page-patterns, fe-component-craft, fe-from-reference, fe-design-review — make the UI output excellent (tokens → layout → accessible/responsive components → build-from-reference → design review) |
 | `security/` | **core:** sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review · **depth:** sec-frontend, sec-api, sec-deps, sec-iac-cloud, sec-threat-model, sec-headers-config — review for vulnerabilities front→back (OWASP/CWE) |
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
 | `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs), **clone** (build the user a Telegram-fronted digital-twin assistant — immortal session, grows a private brain repo) |
@@ -200,6 +201,10 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | a refactor with no clear target | **debtradar** | ranks hotspots by churn × complexity |
 | "why is this code like this?" / a regression | **codehistorian** | git archaeology |
 | new to a big/unfamiliar repo, or "where is X / how's this laid out" | **repo-map** | ranked map — jump to the load-bearing files, don't trawl |
+| building or redesigning a UI — a page, a component, or a whole frontend | **fe-design-system** + **fe-page-patterns** | set tokens first, then the proven layout — designed, not default |
+| UI works but looks generic / isn't accessible / breaks on mobile | **fe-component-craft** | a11y + every state + responsive + the polish |
+| a screenshot or brand to match, or "generate a UI for…" | **fe-from-reference** | image/brand → UI via artifacts / the visualize widget / canvas-design |
+| before shipping frontend, or "does this look good / is it accessible?" | **fe-design-review** | a picky design + a11y pass (blocker/major/minor) |
 | a new dependency being added | **supplyguard** | blocks hallucinated/typosquatted/vulnerable deps |
 | code touches auth, permissions, or roles | **sec-authz-review** | IDOR/BOLA/privesc — the #1 web risk |
 | an endpoint fetches/mutates a resource by id | **sec-authz-review** | object-level authz (BOLA/IDOR) |

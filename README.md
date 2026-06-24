@@ -61,6 +61,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
   (a ranked code map for token-cheap navigation) — explain, debug, trace history, map the codebase.
 - **`skills/guardrails/`** (the Guardian suite) — `guardian` · `supplyguard` · `testmedic` · `cap-tdd` ·
   `debtradar` · `compactor` · `guardian-suite` — keep the work honest and the codebase healthy.
+- **`skills/frontend/`** — `fe-design-system` · `fe-page-patterns` · `fe-component-craft` · `fe-from-reference` ·
+  `fe-design-review` — make the UI output excellent (tokens → layout → accessible/responsive components → review).
 - **`skills/security/`** — `sec-authz-review` · `sec-attacker-review` · `sec-injection` · `sec-authn-session` ·
   `sec-secrets-crypto` · `sec-ssrf-traversal` — review for vulnerabilities, front→back (OWASP/CWE, with fixes).
 - **`skills/workflows/`** — `wf-codebase-audit`, `wf-security-audit` — big, multi-step jobs.

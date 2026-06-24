@@ -31,6 +31,19 @@ alongside:
 
 The leader points you here when a project is big enough that grep-and-read gets expensive.
 
+## Frontend / UI design (what the `frontend/` skills build on)
+The `skills/frontend/` pack produces good UI by reaching for the best of what Claude and the community already
+offer — credited, not vendored:
+- **Claude's own output channels** — **artifacts** (live React/HTML), the **visualize `show_widget`** (inline
+  SVG/HTML), and the Anthropic design skills: **canvas-design** (posters / static art), **theme-factory** (apply
+  a theme), **brand-guidelines** (brand colors + type), **algorithmic-art** (generative).
+- **Component systems** — **[shadcn/ui](https://ui.shadcn.com)**, **[Radix Primitives](https://www.radix-ui.com)**
+  (accessible, unstyled), **[Tailwind CSS](https://tailwindcss.com)** — the conventions `fe-design-system` and
+  `fe-component-craft` reuse.
+- **Standards** — the **[WAI-ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)** and
+  **[WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/)** for the accessibility + contrast rules
+  `fe-component-craft` and `fe-design-review` enforce.
+
 ## Primary sources we build from
 - Anthropic — [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
 - Anthropic — [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
