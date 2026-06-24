@@ -47,6 +47,15 @@ async function main() {
   if (!ssh) bad('brain repo', 'CLONE_REPO_SSH unset — create a PRIVATE repo `clone` and add its SSH url');
   else { try { execFileSync('git', ['ls-remote', ssh], { encoding: 'utf8', timeout: 20000 }); ok('brain repo', 'reachable'); } catch (e) { bad('brain repo', 'git ls-remote failed: ' + String(e.stderr || e.message).split('\n')[0]); } }
 
+  // encrypted-memory vault: contacts are only served when the vault can be opened
+  const wl = path.join(ROOT, '.clone', 'vault', 'whitelist.json');
+  const enc = path.join(process.env.CLONE_BRAIN_PATH || path.join(ROOT, '.clone', 'brain'), 'vault', 'vault.enc');
+  const havePass = !!process.env.CLONE_VAULT_PASSPHRASE;
+  if (fs.existsSync(wl)) ok('vault', `open (plaintext present)${havePass ? '' : ' — set CLONE_VAULT_PASSPHRASE to seal it'}`);
+  else if (fs.existsSync(enc) && havePass) ok('vault', 'sealed — opens on launch from CLONE_VAULT_PASSPHRASE');
+  else if (fs.existsSync(enc)) bad('vault', 'vault.enc present but CLONE_VAULT_PASSPHRASE unset — contacts cannot be served');
+  else bad('vault', 'no whitelist and no vault.enc — build the vault before serving contacts (owner-only until then)');
+
   // single instance
   const lock = path.join(ROOT, '.clone', 'clone.lock');
   if (fs.existsSync(lock)) {
