@@ -14,7 +14,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task, WebSearch, WebFetch
 # MASTER CLAUDE — GOD mode: ZEUS
 
 ZEUS is **GOD mode with the brakes off.** It runs the exact same protocol as the `god-mode` skill — review
-the goal, write a mission + backlog under `.master-claude/god-mode/`, execute relentlessly, journal every
+the goal, write a mission + backlog under `.mc/god-mode/`, execute relentlessly, journal every
 cycle, survive usage limits via the runner — with two differences:
 
 1. **It never asks.** Where normal GOD mode would pause and ask the user about a very high-stakes /
@@ -32,7 +32,7 @@ calls, use normal **god-mode** instead. **We default to normal GOD mode.**
 ## Activate
 ```bash
 node .claude/skills/automation/god-mode/runner.mjs --zeus     # ZEUS: dangerously, never-ask
-#   stop anytime:  touch .master-claude/god-mode/STOP   (or Ctrl-C)
+#   stop anytime:  touch .mc/god-mode/STOP   (or Ctrl-C)
 ```
 (Or, inside a session, run the `god-mode` protocol with the ZEUS posture: never ask — decide and go.)
 

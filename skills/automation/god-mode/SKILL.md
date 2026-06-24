@@ -7,7 +7,7 @@ description: >-
   scratch — writes a mission + prioritized backlog, then executes top-to-bottom WITHOUT pausing for
   confirmation. Anything that genuinely needs the user (production deploys, real secrets/credentials,
   spending money, publishing, irreversible or destructive actions) goes to a BLOCKERS list and it
-  keeps working on everything else. All state lives under .master-claude/god-mode/ so the work
+  keeps working on everything else. All state lives under .mc/god-mode/ so the work
   survives compaction, errors and usage limits; the bundled runner (runner.mjs) auto-resumes after a
   limit and only a manual STOP halts it. Use when the user wants a long, unattended, self-driving build.
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task, WebSearch, WebFetch
@@ -42,12 +42,12 @@ Trigger: the user says "god mode <goal>", `/master-claude:god-mode`, or "@god �
    for, and the autonomy level ("I'll build everything I can locally and queue anything that needs you").
    You may ask **at most one or two** make-or-break questions if the goal is truly ambiguous — otherwise
    state your assumptions and start. GOD mode favors action over interrogation.
-2. **Initialize the state dir** `.master-claude/god-mode/` (below) — write `MISSION.md`, then the
+2. **Initialize the state dir** `.mc/god-mode/` (below) — write `MISSION.md`, then the
    first `BACKLOG.md`.
 3. **Start the loop.** If the user wants it to survive usage limits unattended, tell them to launch the
    **runner** (see "Resilience"). Inside the session, just begin executing.
 
-## State — `.master-claude/god-mode/`
+## State — `.mc/god-mode/`
 Everything GOD mode needs to resume lives here. Treat it as the single source of truth; re-read it at
 the start of every cycle (and after any compaction).
 
@@ -151,7 +151,7 @@ repeats — stopping only when it sees the `STOP` or `DONE` sentinel. Tell the u
 ```bash
 # from the project root, after GOD mode is initialized:
 node .claude/skills/automation/god-mode/runner.mjs
-#   STOP it anytime:   touch .master-claude/god-mode/STOP   (or Ctrl-C)
+#   STOP it anytime:   touch .mc/god-mode/STOP   (or Ctrl-C)
 #   It auto-resumes after a usage limit; only STOP/DONE end it.
 ```
 
@@ -169,7 +169,7 @@ above are what keep that safe. (Run `node .claude/skills/automation/god-mode/run
 
 ## Manual stop
 The user can stop GOD mode at any time:
-- `touch .master-claude/god-mode/STOP` (the loop and the runner both honor it), or Ctrl-C the runner.
+- `touch .mc/god-mode/STOP` (the loop and the runner both honor it), or Ctrl-C the runner.
 - Tell them this up front. On stop, write a final `JOURNAL.md` summary + the current `BLOCKERS.md` so they
   know exactly where things stand.
 

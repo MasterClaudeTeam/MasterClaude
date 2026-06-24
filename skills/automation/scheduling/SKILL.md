@@ -19,11 +19,11 @@ GOD mode push on the backlog, or a one-off "do this at 2am". You build the job, 
 ## How a scheduled MASTER CLAUDE run works
 A scheduled job just runs the Claude CLI non-interactively in the project directory and logs the output:
 ```bash
-cd <project> && claude -p "<task>" --dangerously-skip-permissions >> .master-claude/schedule/<name>.log 2>&1
+cd <project> && claude -p "<task>" --dangerously-skip-permissions >> .mc/schedule/<name>.log 2>&1
 ```
 For a GOD mode session, schedule the runner instead:
 ```bash
-cd <project> && node .claude/skills/automation/god-mode/runner.mjs >> .master-claude/schedule/<name>.log 2>&1
+cd <project> && node .claude/skills/automation/god-mode/runner.mjs >> .mc/schedule/<name>.log 2>&1
 ```
 Because the run is unattended it uses `--dangerously-skip-permissions` (or the GOD mode runner, which
 carries the god-mode safety rails). Tell the user that, and keep scheduled tasks scoped to safe work.
@@ -32,12 +32,12 @@ carries the god-mode safety rails). Tell the user that, and keep scheduled tasks
 1. **Pin the spec.** What command/task, how often (cron expression or schtasks cadence), the project dir
    (absolute path), and a short job `<name>`. Pick a sensible default and state it rather than over-asking.
 2. **Write a launcher** so the schedule line stays simple and logs are kept. Create
-   `.master-claude/schedule/<name>.sh` (or `.cmd` on Windows):
+   `.mc/schedule/<name>.sh` (or `.cmd` on Windows):
    ```bash
    #!/usr/bin/env bash
    cd "/abs/path/to/project" || exit 1
-   mkdir -p .master-claude/schedule
-   exec claude -p "your task here" --dangerously-skip-permissions >> ".master-claude/schedule/<name>.log" 2>&1
+   mkdir -p .mc/schedule
+   exec claude -p "your task here" --dangerously-skip-permissions >> ".mc/schedule/<name>.log" 2>&1
    ```
    `chmod +x` it. (For GOD mode, `exec node .claude/skills/automation/god-mode/runner.mjs` instead.)
 3. **Detect the OS and build the schedule command** (below). **Show the exact command and confirm before
@@ -49,7 +49,7 @@ carries the god-mode safety rails). Tell the user that, and keep scheduled tasks
 ### Linux / macOS — cron
 Append a line to the user's crontab (`crontab -e`, or programmatically):
 ```bash
-( crontab -l 2>/dev/null; echo "0 2 * * * /abs/path/.master-claude/schedule/<name>.sh" ) | crontab -
+( crontab -l 2>/dev/null; echo "0 2 * * * /abs/path/.mc/schedule/<name>.sh" ) | crontab -
 ```
 Cron format: `min hour day-of-month month day-of-week`. Examples:
 - `0 2 * * *` — every day at 02:00 · `0 9 * * 1` — Mondays 09:00 · `*/30 * * * *` — every 30 min.
@@ -64,14 +64,14 @@ launcher and a `StartCalendarInterval`, then `launchctl load` it. Use this when 
 
 ### Windows — schtasks
 ```bat
-schtasks /Create /TN "MasterClaude\<name>" /TR "\"C:\path\.master-claude\schedule\<name>.cmd\"" /SC DAILY /ST 02:00 /F
+schtasks /Create /TN "MasterClaude\<name>" /TR "\"C:\path\.mc\schedule\<name>.cmd\"" /SC DAILY /ST 02:00 /F
 ```
 `/SC` = MINUTE|HOURLY|DAILY|WEEKLY|ONCE; `/ST` = start time; `/D MON` for weekly day.
 - List: `schtasks /Query /TN "MasterClaude\<name>"` · Remove: `schtasks /Delete /TN "MasterClaude\<name>" /F`.
-The `.cmd` launcher: `cd /d "C:\path\to\project" && claude -p "task" --dangerously-skip-permissions >> ".master-claude\schedule\<name>.log" 2>&1`.
+The `.cmd` launcher: `cd /d "C:\path\to\project" && claude -p "task" --dangerously-skip-permissions >> ".mc\schedule\<name>.log" 2>&1`.
 
 ## Recipe ideas
-- **Nightly health sweep** — `claude -p "Run /sentinel:sweep, then summarize new findings to .master-claude/schedule/sweep-report.md"` at 02:00.
+- **Nightly health sweep** — `claude -p "Run /sentinel:sweep, then summarize new findings to .mc/schedule/sweep-report.md"` at 02:00.
 - **Weekly security audit** — `claude -p "Run the wf-security-audit workflow and write the report to .security/"` Mondays.
 - **Daily debt check** — `claude -p "Run debtradar; list the top 3 hotspots and open a plan for the worst"`.
 - **Daily GOD mode push** — `node .claude/skills/automation/god-mode/runner.mjs` each morning for an hour
@@ -88,6 +88,6 @@ The `.cmd` launcher: `cd /d "C:\path\to\project" && claude -p "task" --dangerous
 - Always keep logs (the launcher does) so a failed overnight run is debuggable.
 
 ## Manage existing schedules
-On request, **list** all MASTER CLAUDE schedules (`crontab -l | grep .master-claude` / `schtasks /Query`
+On request, **list** all MASTER CLAUDE schedules (`crontab -l | grep .mc` / `schtasks /Query`
 under `MasterClaude\`) and offer to **remove** or adjust any. Keep a note of what you created in
-`.master-claude/schedule/registry.md` (name, cadence, command) so they're easy to find later.
+`.mc/schedule/registry.md` (name, cadence, command) so they're easy to find later.

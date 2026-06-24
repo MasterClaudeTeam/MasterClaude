@@ -84,7 +84,7 @@ category; each folder has a README that brainstorms what else belongs there (goo
 ## GOD mode — build until you say stop
 Hand MASTER CLAUDE a goal and let it run. **GOD mode** (`/master-claude:god-mode "<goal>"`) reviews the
 situation — improve an existing project or build one from scratch — writes a mission + prioritized backlog
-under `.master-claude/god-mode/`, then executes **relentlessly, without pausing for confirmation**. Anything
+under `.mc/god-mode/`, then executes **relentlessly, without pausing for confirmation**. Anything
 that needs *you* — production, real secrets, money, publishing, irreversible actions — goes to a **BLOCKERS**
 list and it keeps working everything else; nothing idles.
 
@@ -93,7 +93,7 @@ reboots. For a true walk-away run, launch the bundled runner — it **auto-resum
 stops only on a manual `STOP`:
 ```bash
 node .claude/skills/automation/god-mode/runner.mjs        # keeps going across usage limits
-touch .master-claude/god-mode/STOP             # stop it (or Ctrl-C)
+touch .mc/god-mode/STOP             # stop it (or Ctrl-C)
 ```
 The safety rails always hold: no production, secrets, money, or destructive actions without you, tests stay
 honest, and a manual stop always wins. By default GOD mode **asks you about the genuinely critical /

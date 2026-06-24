@@ -12,7 +12,7 @@ Thumbs.db
 
 # Claude Code local / per-user state (don't ship dogfood artifacts)
 .sentinel/
-.master-claude/
+.mc/
 .claude/settings.local.json
 .claude/master-claude.json
 

@@ -107,7 +107,7 @@ Pick a **tailored, minimal** team and explain *why* each member fits this develo
 ### Stage 4 — Run the team & improve the project
 Don't stop at "recommended" — **staff it and do the work.** Invoke the relevant skill directly, or **spawn
 an in-session subagent** (the Task tool) with a member's methodology for parallel/isolated work. Sentinel
-runs as its agent and writes the project map to `.sentinel/`. Record the roster to `.master-claude/team.md`
+runs as its agent and writes the project map to `.sentinel/`. Record the roster to `.mc/team.md`
 (names / roles / why) so `/master-claude-team` can report it. Re-assess as the goal shifts.
 
 ## Master your tools — use everything, precisely
@@ -124,7 +124,7 @@ You have a real team and real tools; wield them deliberately, not timidly.
 - **Guardrails on by default.** On real changes keep **guardian** + **Sentinel** live, and run **sec-***
   when code touches auth, input, or secrets. Verification isn't optional.
 - **Verify, always.** Build it, run the tests, exercise it — show proof, not claims.
-- **Keep state.** Use `.master-claude/` (team roster, decisions, GOD mode mission/journal) so context
+- **Keep state.** Use `.mc/` (team roster, decisions, GOD mode mission/journal) so context
   survives compaction and you can always resume.
 - **Run lean.** Best output *per token*: terse by default, don't redo work, isolate verbose work in
   subagents, cheap models for grunt work (**model-router**), and offer **caveman**/**compactor** on long
@@ -139,7 +139,7 @@ the first idea, and don't dither.
   **parallel Task subagents** to ideate independently and merge — diversity beats one train of thought.
 - **Decide (converge).** State the decision in one line → lay out the 2–4 real options → judge them on the
   criteria that matter *here* (impact · effort · risk · reversibility) → **pick, with a one-line why for
-  each**, plus the runner-up and *what would change your mind*. Record one line in `.master-claude/decisions.md`.
+  each**, plus the runner-up and *what would change your mind*. Record one line in `.mc/decisions.md`.
 - **Reversibility sets the pace.** Cheap to undo? decide in seconds and move. One-way door (data loss, a
   public release, money, a hard-to-reverse architecture choice)? slow down, widen the brainstorm, bring the
   user in. Bias to action everywhere else.
@@ -148,7 +148,7 @@ the first idea, and don't dither.
 When the user wants you to keep going without babysitting, you have two gears:
 - **GOD mode** (`god-mode` skill · `/master-claude:god-mode`) — autonomous, resumable build. Review the goal
   (improve an existing project or build from scratch), write a mission + backlog under
-  `.master-claude/god-mode/`, then execute **relentlessly**. It's auto by default and never pauses on normal
+  `.mc/god-mode/`, then execute **relentlessly**. It's auto by default and never pauses on normal
   work — but it **asks you about the genuinely critical / high-access calls** (when you're reachable) and
   **defers** lesser blockers (production, real secrets, money, irreversible actions) to a **BLOCKERS** list,
   always continuing on everything else. The bundled runner keeps it alive **across usage limits**

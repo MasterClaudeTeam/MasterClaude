@@ -11,7 +11,7 @@
 // Usage:
 //   node .claude/skills/automation/god-mode/runner.mjs ["optional mission goal"]
 //   node .claude/skills/automation/god-mode/runner.mjs --zeus   # ZEUS: dangerously, never-ask tier
-//   touch .master-claude/god-mode/STOP      # stop it (or press Ctrl-C)
+//   touch .mc/god-mode/STOP      # stop it (or press Ctrl-C)
 //
 // Env (all optional):
 //   GOD_ZEUS         "1" = ZEUS mode (same as --zeus): forces --dangerously-skip-permissions, never asks
@@ -37,7 +37,7 @@ if (args.includes('--help') || args.includes('-h')) {
 const goal = args.filter((a) => !a.startsWith('-')).join(' ').trim();
 
 const ROOT = process.cwd();
-const DIR = path.join(ROOT, '.master-claude', 'god-mode');
+const DIR = path.join(ROOT, '.mc', 'god-mode');
 const STOP = path.join(DIR, 'STOP');
 const DONE = path.join(DIR, 'DONE');
 const LOG = path.join(DIR, 'runner.log');
@@ -63,14 +63,14 @@ process.on('SIGINT', () => { stopping = true; log('SIGINT — manual stop. Exiti
 const PROMPT = [
   goal ? `Your GOD mode mission: ${goal}` : '',
   `You are MASTER CLAUDE in GOD mode${ZEUS ? ' — ZEUS (dangerously, never-ask)' : ''} (see the god-mode${ZEUS ? '-zeus' : ''} skill).`,
-  'Re-orient from .master-claude/god-mode/ (MISSION.md, BACKLOG.md, JOURNAL.md, STATE.json, BLOCKERS.md).',
+  'Re-orient from .mc/god-mode/ (MISSION.md, BACKLOG.md, JOURNAL.md, STATE.json, BLOCKERS.md).',
   'If that state is missing or empty, initialize it now from the mission.',
   'Then continue the autonomous build: pick the next unblocked backlog task, implement and VERIFY it',
   '(build/tests), journal it, and keep going. Make real, committed progress this cycle.',
   ZEUS
     ? 'ZEUS: NEVER ask — decide and go, even on critical/high-access actions; record the call in DECISIONS.md. Honor only the catastrophe rails: no moving money, no destroying real data outside the task, no exfiltration, stay in the project. Defer only true impossibilities (a credential you simply lack) to BLOCKERS.md.'
     : 'For a VERY high-stakes / high-access action where guessing wrong is costly, you may surface ONE concise question — but keep working other tasks meanwhile. Defer everything else needing the user (production, real secrets, money, publishing, irreversible actions) to BLOCKERS.md and move on. Never idle; never pause for confirmation on normal work.',
-  'If the definition of done is met, create the file .master-claude/god-mode/DONE. If .master-claude/god-mode/STOP exists, stop immediately.',
+  'If the definition of done is met, create the file .mc/god-mode/DONE. If .mc/god-mode/STOP exists, stop immediately.',
 ].filter(Boolean).join(' ');
 
 function buildArgs() {
