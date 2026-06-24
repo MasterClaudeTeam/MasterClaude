@@ -25,9 +25,15 @@ function token() {
 function apiBase() { return (process.env.TELEGRAM_API_BASE || DEFAULT_API_BASE).replace(/\/+$/, ''); }
 export function usingBridge() { return !!process.env.TELEGRAM_API_BASE; }
 
+// In-flight requests, so a shutdown (Ctrl-C) can cancel a blocking long-poll immediately instead of
+// waiting out the ~50s getUpdates hold. abortAll() rejects every pending call with an AbortError.
+const inflight = new Set();
+export function abortAll() { for (const c of inflight) { try { c.abort(); } catch {} } inflight.clear(); }
+
 // Low-level API call with a fetch timeout and automatic 429 (flood) back-off.
 export async function call(method, params = {}, { timeoutMs = DEFAULT_TIMEOUT_MS } = {}) {
   const ctrl = new AbortController();
+  inflight.add(ctrl);
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
     const headers = { 'content-type': 'application/json' };
@@ -49,6 +55,7 @@ export async function call(method, params = {}, { timeoutMs = DEFAULT_TIMEOUT_MS
     return data.result;
   } finally {
     clearTimeout(timer);
+    inflight.delete(ctrl);
   }
 }
 

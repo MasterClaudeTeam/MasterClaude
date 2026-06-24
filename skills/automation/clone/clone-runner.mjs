@@ -310,7 +310,12 @@ async function handleOwnerCommand(text) {
 
 // ---------- main loop ----------
 let stopping = false;
-process.on('SIGINT', () => { stopping = true; log('SIGINT — stopping after this step.'); });
+process.on('SIGINT', () => {
+  if (stopping) { console.log('Force quit.'); process.exit(130); } // second Ctrl-C → exit now
+  stopping = true;
+  log('Shutting down after this step — press Ctrl-C again to force-quit.');
+  try { tg.abortAll(); } catch {} // cancel the in-flight long-poll so an idle runner stops now, not in ~50s
+});
 process.on('exit', releaseLock);
 
 async function main() {
@@ -326,6 +331,7 @@ async function main() {
 
   try { const me = await tg.getMe(); log(`Telegram OK: @${me.username}`); }
   catch (e) { log('Telegram getMe failed (' + e.message + ') — will keep retrying.'); }
+  log('Ready — long-polling for messages. Idle is normal; Ctrl-C to stop (or: touch .clone/STOP).');
 
   while (!stopping) {
     if (fs.existsSync(STOP)) { log('STOP present — halting.'); break; }
@@ -377,7 +383,10 @@ async function main() {
         // plain text from an unknown chat → one share-contact request; do NOT process the text at all
         await askForContact(chatId);
       }
-    } catch (e) { log('poll error: ' + e.message); await sleep(3000); }
+    } catch (e) {
+      if (stopping) break;                 // a Ctrl-C aborted the poll → exit promptly, don't sleep/retry
+      log('poll error: ' + e.message); await sleep(3000);
+    }
 
     if (fs.existsSync(PAUSE)) { await sleep(2000); continue; }
 
