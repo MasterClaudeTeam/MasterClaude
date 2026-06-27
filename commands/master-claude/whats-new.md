@@ -10,7 +10,8 @@ As MASTER CLAUDE, give the developer a short, relevant "what's new" briefing. $A
    that are **new since their version** AND **relevant to this project/developer**. Skip the rest.
 3. **MASTER CLAUDE updates** — the skills are plain `.md` in their `.claude/`. To pull the latest, re-run
    the setup (or offer to do it): `git pull` the repo and re-copy `skills/ agents/ commands/` into `.claude/`.
-4. **Ecosystem** — if something notable shipped (a new Claude model, a major Claude Code feature, or an
-   ecosystem tool that fits their work), confirm with `WebSearch`/`WebFetch` and mention it in one line.
+4. **Anthropic & Claude** — `WebFetch` the **Claude blog** (`https://claude.com/blog`) for new models, product
+   features and capabilities; plus any notable ecosystem tool that fits their work. Confirm with `WebSearch` and
+   mention the one or two that matter, a line each.
 
 Keep it to a tight, skimmable briefing — what changed and why it matters for *them*. Never dump the whole changelog.

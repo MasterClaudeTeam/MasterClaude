@@ -18,9 +18,11 @@ under `.security/`. These are review methodologies, not attack tooling.
 - `sec-iac-cloud` — Docker/K8s/Terraform/cloud misconfig (root containers, public buckets, open IAM/SGs).
 - `sec-threat-model` — a STRIDE threat model of a feature or system (design-time).
 - `sec-headers-config` — security headers, cookie flags, TLS, error/info leak, debug surface.
+- `sec-pii` — anonymize user PII (names, emails, IDs, cards, medical) before it reaches a model / log / third
+  party (Microsoft Presidio: analyze → mask / redact / hash / encrypt; text, images, DICOM).
 
 **Brainstorm — what else belongs here** (great contributions)
-- Further: `sec-deserialization`, `sec-pii-privacy`, `sec-logging-monitoring`, `sec-mobile`,
+- Further: `sec-deserialization`, `sec-logging-monitoring`, `sec-mobile`,
   `sec-llm` (prompt injection / insecure tool use), and stack-specific gates (`go-sec`, `node-sec`, `python-sec`).
 
 **Add one:** `skills/security/<id>/SKILL.md` with frontmatter (`name`, a trigger-focused `description`,

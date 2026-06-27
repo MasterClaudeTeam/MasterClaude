@@ -6,8 +6,8 @@ description: >-
   recurring or one-off autonomous MASTER CLAUDE runs with the OS scheduler — cron on Linux/macOS,
   schtasks on Windows, launchd as an option on macOS. Common uses: a nightly Sentinel sweep, a weekly
   security audit, a daily GOD mode session that keeps clearing the backlog, or a one-off delayed task.
-  It generates the exact scheduler command, confirms with the user, installs it, and can list or remove
-  schedules.
+  It shows you the exact scheduler command and confirms before installing; the scheduled runs honor the same
+  safety rails, and you can list or remove schedules anytime.
 allowed-tools: Read, Grep, Glob, Bash, Write
 ---
 

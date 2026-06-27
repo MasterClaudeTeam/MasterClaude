@@ -4,8 +4,8 @@ description: >-
   MASTER CLAUDE's autonomous "GOD mode". Triggers on "god mode", "auto mode", "run autonomously",
   "build it and don't stop", "keep going until I stop you", or "@god". Turns the leader into a
   relentless, resumable builder: it reviews the goal — improve an existing project or build one from
-  scratch — writes a mission + prioritized backlog, then executes top-to-bottom WITHOUT pausing for
-  confirmation. Anything that genuinely needs the user (production deploys, real secrets/credentials,
+  scratch — writes a mission + prioritized backlog, then executes the work without pausing on normal dev tasks
+  (it asks you about the genuinely high-stakes / irreversible calls). Anything that needs the user (production deploys, real secrets/credentials,
   spending money, publishing, irreversible or destructive actions) goes to a BLOCKERS list and it
   keeps working on everything else. All state lives under .mc/god-mode/ so the work
   survives compaction, errors and usage limits; the bundled runner (runner.mjs) auto-resumes after a

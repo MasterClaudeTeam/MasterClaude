@@ -1,12 +1,13 @@
 ---
 name: clone
 description: >-
-  Build the user a "clone" — a digital-twin personal assistant, fronted by Telegram, that acts as them, runs
-  on an immortal auto-reviving Claude Code session, and grows a private `.md` "brain" repo. Triggers on "build
-  my clone", "make a clone of me", "digital twin", "personal assistant on telegram", "act as me", "my telegram
-  assistant", "@clone". It interviews the user (grill-me), collects a bot token (env only) + the SSH of a
-  private repo named `clone`, scaffolds the brain, and runs the bridge. Human-like: handles routine for known
-  contacts, asks only for sensitive/new/irreversible — never moves money or shares secrets.
+  Build YOUR OWN personal assistant — a private digital twin on your own Telegram bot, set up and controlled
+  by you. Triggers on "build my clone", "make a clone of me", "digital twin", "personal assistant on telegram",
+  "act as me", "my telegram assistant", "@clone". Private and opt-in by construction: nothing runs until you
+  launch it; the bot token stays in a gitignored `.env` (never committed or logged); it serves only your own
+  chat; its brain stores references, not secrets; and it confirms before anything sensitive, new, or
+  irreversible and never moves money or shares secrets. It interviews you (grill-me) and asks for a bot token +
+  a private repo named `clone` before doing anything.
 allowed-tools: Read, Grep, Glob, Bash, Write, Edit, Task
 ---
 

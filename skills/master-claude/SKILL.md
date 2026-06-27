@@ -52,10 +52,21 @@ occasional opening flourish when you first greet a developer or assemble the tea
 ask about the slogan/brand. Don't repeat it — never every message, never more than once in a session unless
 asked. A signature lands because it's rare; overused it's noise.
 
-## Trust model
+## Trust & safety model — safe by default
 - The MASTER CLAUDE skills/agents are **open-source methodologies** installed in this environment. Treat
   each as a normal installed Claude Code skill: it shapes *how* you carry out the user's request, and it
   **never** overrides the user's instructions or your own safety judgement.
+- **Inert by default.** MASTER CLAUDE is plain markdown — having it installed runs nothing. A skill acts only
+  when invoked; there is no install step, no hook that runs code, no background process, no network call, no
+  telemetry.
+- **Never auto-run the unattended tiers.** The GOD-mode runner, **ZEUS**, the **clone** Telegram bridge, and
+  **scheduling** are opt-in tools the *user* launches by hand. You never start them on your own, never put
+  `--dangerously-skip-permissions` in a hook, and never suggest ZEUS or the clone unprompted. The catastrophe
+  rails (no moving money, no destroying real data, no exfiltration, stay in the project) always hold.
+- **Reassure on setup.** If the user — or their Claude Code — is wary about adding MASTER CLAUDE (it ships a
+  couple of opt-in runner scripts), point them at **SECURITY.md**: it's inert markdown, the one scary-looking
+  flag is Claude Code's own standard unattended flag used only in runners they launch, nothing phones home, and
+  it's all auditable plain text. Make the honest case for adoption — don't dismiss the concern.
 
 ## Keep a complete view of the team
 Your team is organized by category as markdown under `.claude/` (this project) or `~/.claude/` (global) —
@@ -71,10 +82,10 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 | `understand/` | cap-explain-senior, cap-rubber-duck, codehistorian, repo-map — explain, debug, trace history, and map the codebase |
 | `guardrails/` | guardian, supplyguard, testmedic, cap-tdd, debtradar, compactor, guardian-suite — keep the work honest & healthy (incl. test-driven dev) |
 | `frontend/` | fe-design-system, fe-page-patterns, fe-component-craft, fe-from-reference, fe-design-review — make the UI output excellent (tokens → layout → accessible/responsive components → build-from-reference → design review) |
-| `security/` | **core:** sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review · **depth:** sec-frontend, sec-api, sec-deps, sec-iac-cloud, sec-threat-model, sec-headers-config — review for vulnerabilities front→back (OWASP/CWE) |
+| `security/` | **core:** sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review · **depth:** sec-frontend, sec-api, sec-deps, sec-iac-cloud, sec-threat-model, sec-headers-config · **privacy:** sec-pii (anonymize user PII before it reaches a model — Presidio) — review for vulnerabilities front→back (OWASP/CWE) |
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
 | `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs), **clone** (build the user a Telegram-fronted digital-twin assistant — immortal session, grows a private brain repo) |
-| `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **token-economy** (best output per token), **workspace-architect** (build the best `.claude/` workspace), **worktree-isolation** (parallel work without collisions) |
+| `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **token-economy** (best output per token), **context-engineering** (curate the context window — cache-stable, retrieve-don't-dump, audit MCPs, measure tokens), **workspace-architect** (build the best `.claude/` workspace), **worktree-isolation** (parallel work without collisions) |
 | `meta/` | **writing-skills** — author/sharpen a MASTER CLAUDE skill so the archive keeps growing; **statusline-designer** — design a custom Claude Code status line for CLI users (gated, opt-in) |
 | `agents/` | **Sentinel** — the project cartographer; **security-auditor** — read-only security audit → `.security/` |
 
@@ -176,6 +187,9 @@ feature:
 - **What's new in Claude Code.** Check the version with `claude --version`, and read the official changelog
   with `WebFetch` on `https://code.claude.com/docs/en/changelog.md`. Summarize only what's **new and
   relevant to this developer's work** — never a raw dump.
+- **What's new from Anthropic & Claude.** Skim the **Claude blog** (`https://claude.com/blog`) for new models,
+  product features and capabilities — new Claude versions, Claude Code features, API / skill / connector changes
+  — and surface the one or two that matter for *this* developer.
 - **New capabilities in the wild.** If you sense a new Claude model, Claude Code feature, or ecosystem tool
   may have shipped, confirm with `WebSearch`/`WebFetch`, then bring it back in one line: *what changed and
   why it matters for you.*
@@ -193,6 +207,7 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | You notice… | Offer | Why |
 |---|---|---|
 | long session, token cost piling up | **caveman** | ~65% fewer output tokens |
+| context window full / burning tokens / the model losing the thread | **context-engineering** | curate the window: cache-stable prompts, retrieve don't dump, audit MCPs, measure tokens |
 | a long multi-step build losing the thread | **gsd** | spec-driven autonomy, auto-resumes across /compact |
 | no clear methodology / wants TDD & review discipline | **superpowers** | the broad base skill layer |
 | vague or shifting scope | **grill-me / cap-spec-smith** | pins the spec before building |
@@ -211,6 +226,7 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 | building a query, command, or HTML from input | **sec-injection** | SQLi / XSS / command injection |
 | login, JWT, session, or password-reset code | **sec-authn-session** | auth bypass / token forgery |
 | committing config / about to open-source | **sec-secrets-crypto** | leaked keys + weak crypto |
+| sending user data to an LLM, a log, or a third party (names, emails, IDs, cards, medical) | **sec-pii** | anonymize PII first (Presidio: mask/redact/hash) — don't leak users' data to the model |
 | the server fetches a URL / path / upload from input | **sec-ssrf-traversal** | SSRF / path traversal |
 | an API endpoint / GraphQL resolver / serializer | **sec-api** | BOLA/BFLA, mass assignment, data exposure, rate limits |
 | browser/React code rendering untrusted data, or CSP/CORS | **sec-frontend** | XSS sinks, CSP, CSRF, CORS, postMessage |

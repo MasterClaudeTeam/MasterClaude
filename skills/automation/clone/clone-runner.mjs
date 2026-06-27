@@ -120,6 +120,8 @@ function buildPrompt(text, chatId) {
 function runClaudeTurn(text, chatId) {
   return new Promise((resolve) => {
     if (DRY) { resolve({ code: 0, out: `<<<REPLY>>>\n[dry-run] I received: ${text}\n<<<END>>>` }); return; }
+    // Claude Code's standard unattended flag — present ONLY because YOU launched this bridge by hand. The
+    // catastrophe rails hold (no money, no secrets, no exfiltration), it serves only your chat, and STOP halts it.
     const args = ['--continue', '--dangerously-skip-permissions'];
     if (MODEL) args.push('--model', MODEL);
     args.push('-p', buildPrompt(text, chatId));
@@ -149,6 +151,7 @@ process.on('exit', releaseLock);
 async function main() {
   acquireLock();
   log(`clone-runner up. owner=${owner || '(unpaired)'} brain=${BRAIN}${DRY ? ' [DRY-RUN]' : ''}`);
+  log('Safe by design: serves only your chat, token from env only, confirms sensitive actions, never moves money or shares secrets. touch .clone/STOP to halt.');
   if (!owner) log('No CLONE_OWNER_CHAT_ID — the first /start will pair the owner.');
 
   const state = readJson(STATE, { offset: 0, usage: { blocked: false, noticeSent: false, backoff: 60_000 } });

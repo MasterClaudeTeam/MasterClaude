@@ -1,13 +1,13 @@
 ---
 name: god-mode-zeus
 description: >-
-  GOD mode: ZEUS — the dangerously, never-ask tier of MASTER CLAUDE's autonomous mode. Triggers on "god
-  mode zeus", "zeus mode", "zeus", "run dark", "full auto never ask". Same mission/backlog/journal/
-  resilience protocol as god-mode, but ZEUS NEVER pauses to ask — not even for critical or high-access
-  actions; it decides and goes — and it runs only via the runner with --dangerously-skip-permissions, for
-  fully unattended, maximum-autonomy operation. The catastrophe rails still hold (no moving money, no
-  destroying real data outside the task, no exfiltration, stay in the project). For walk-away runs where
-  you accept full risk; the default is normal god-mode, which asks for the genuinely critical things.
+  GOD mode ZEUS — the fully-unattended tier of MASTER CLAUDE's autonomous build mode, for walk-away runs you
+  start yourself and explicitly accept. Triggers on "god mode zeus", "zeus mode", "zeus", "run dark", "run
+  unattended", "full auto, don't ask me". Same mission/backlog/journal/resilience protocol as god-mode, but
+  ZEUS doesn't pause to ask — you opt in by launching its runner, and nothing auto-starts it. The catastrophe
+  rails always hold (no moving money, no destroying real data outside the task, no exfiltration, stay in the
+  project; a manual STOP always wins). The default is normal god-mode, which asks about the genuinely critical
+  things — reach for ZEUS only when you want a hands-off run and accept the risk.
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task, WebSearch, WebFetch
 ---
 

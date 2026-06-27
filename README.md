@@ -7,6 +7,10 @@ with the newest Claude Code features.
 
 No account. No API key. No vault. It's just markdown you drop into `.claude/` — everything is local, plain text, and open.
 
+**Safe by default.** Adding MASTER CLAUDE runs **nothing** — it's inert markdown. The optional autonomous
+runners (GOD mode, the clone) are tools *you* launch by hand; nothing auto-starts, no data leaves your machine,
+and the catastrophe rails always hold. Full model: **[SECURITY.md](SECURITY.md)**.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Buy me a coffee in TON](https://img.shields.io/badge/Buy%20me%20a%20coffee-TON-0098EA.svg)](https://masterclaude.shop/donate)
 
@@ -64,14 +68,17 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`skills/frontend/`** — `fe-design-system` · `fe-page-patterns` · `fe-component-craft` · `fe-from-reference` ·
   `fe-design-review` — make the UI output excellent (tokens → layout → accessible/responsive components → review).
 - **`skills/security/`** — `sec-authz-review` · `sec-attacker-review` · `sec-injection` · `sec-authn-session` ·
-  `sec-secrets-crypto` · `sec-ssrf-traversal` — review for vulnerabilities, front→back (OWASP/CWE, with fixes).
+  `sec-secrets-crypto` · `sec-ssrf-traversal` (+ depth: frontend / api / deps / iac-cloud / threat-model /
+  headers) · `sec-pii` (anonymize user PII before it reaches a model) — review for vulnerabilities + privacy,
+  front→back (OWASP/CWE, with fixes).
 - **`skills/workflows/`** — `wf-codebase-audit`, `wf-security-audit` — big, multi-step jobs.
 - **`skills/automation/`** — `god-mode` (an autonomous, resumable build; asks only for the critical) ·
   `god-mode-zeus` (the dangerously, never-ask tier) · `scheduling` (cron/schtasks/launchd recurring runs) ·
   `clone` (a Telegram-fronted digital-twin assistant — immortal session, grows a private brain repo).
 - **`skills/orchestration/`** — `subagent-orchestration` (delegate to subagents/teams) · `model-router`
   (pick a model per agent — Opus lead / Sonnet workers / Haiku scouts) · `token-economy` (best output per
-  token — caveman, cheaper models, cache-warm) · `workspace-architect` (the best `.claude/` setup per
+  token — caveman, cheaper models, cache-warm) · `context-engineering` (curate the window — cache-stable,
+  retrieve-don't-dump, audit MCPs, measure tokens) · `workspace-architect` (the best `.claude/` setup per
   project) · `worktree-isolation` (parallel work without collisions).
 - **`skills/meta/`** — `writing-skills` (author or sharpen a MASTER CLAUDE skill) · `statusline-designer`
   (design a custom Claude Code status line for CLI users — gated, opt-in) — so the archive keeps growing.
@@ -101,10 +108,12 @@ The safety rails always hold: no production, secrets, money, or destructive acti
 honest, and a manual stop always wins. By default GOD mode **asks you about the genuinely critical /
 high-access calls** and defers the rest.
 
-Want it to run **dark** and never ask? **ZEUS** (`/master-claude:god-mode-zeus`, or `runner.mjs --zeus`) is
-the separate *dangerously* tier — it runs with `--dangerously-skip-permissions`, never pauses to ask, and
-pushes maximum autonomy, for when you accept full risk. (The catastrophe rails still hold.) Pair either with
-**scheduling** (`/master-claude:schedule`) for nightly sweeps, weekly audits, or a daily push on the backlog.
+Want a fully hands-off run? **ZEUS** (`/master-claude:god-mode-zeus`, or `runner.mjs --zeus`) is the opt-in
+unattended tier *you* launch — it runs the runner with Claude Code's standard `--dangerously-skip-permissions`
+(the normal flag for unattended automation, since no human is there to answer prompts), doesn't pause to ask,
+and you reach for it only when you accept the risk. **Nothing auto-starts it**, and the catastrophe rails still
+hold. Pair either with **scheduling** (`/master-claude:schedule`) for nightly sweeps, weekly audits, or a daily
+push on the backlog.
 
 ## Staying up to date
 MASTER CLAUDE keeps itself current — it's your guide to the best of Claude Code. Ask it **"what's new"**

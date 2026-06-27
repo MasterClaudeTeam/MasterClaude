@@ -18,6 +18,24 @@ running alongside MASTER CLAUDE. The leader knows these and will recommend the r
 > points to [Alireza Rezvani's skills aggregator](https://github.com/alirezarezvani/claude-skills), which
 > **re-hosts** Matt Pocock's `grill-me` — the canonical upstream is `mattpocock/skills` above.
 
+## Privacy / PII (what `sec-pii` builds on)
+- **[Microsoft Presidio](https://github.com/microsoft/presidio)** (MIT) — detect + de-identify PII: an
+  **analyzer** + **anonymizer** + **image/DICOM redactor**; mask / redact / hash / encrypt; built-in + custom
+  recognizers; Python / Docker / Kubernetes / PySpark. The engine behind our `sec-pii` skill — run it as a
+  redaction gateway *before* user data reaches a model, a log, or a third party.
+
+## Context-engineering power-ups (stop burning tokens)
+Tools the **context-engineering** skill points at (credit: the "15 ways to stop burning tokens" playbook by
+**devwithmj** on Medium). Re-implement the discipline; install these where they fit:
+- **[Context7](https://github.com/upstash/context7)** (Upstash) — an MCP that fetches **version-correct library
+  docs at query time**, so you stop pasting stale docs and hallucinating APIs.
+- **[CodeGraph](https://github.com/colbymchenry/codegraph)** — a pre-indexed **code knowledge graph** over MCP
+  (semantic queries instead of grep/Read crawls). Complements our zero-dependency `repo-map`.
+- **[RTK](https://github.com/rtk-ai/rtk)** (Apache-2.0) — a CLI proxy that **compresses command / log output**
+  (60–90% fewer tokens) before it reaches the model; installs as a PreToolUse hook.
+- **[Tokscale](https://github.com/junhoyeo/tokscale)** — **track token usage** across your agents like an infra
+  cost (per model / day / session). Pairs with `model-router` + `token-economy`.
+
 ## Codebase graph / repo-map (optional MCP power-ups)
 MASTER CLAUDE ships a zero-dependency **`repo-map`** skill (a ranked structure map via Grep/Glob) plus
 **Sentinel** (the architectural map). For a *true* AST/LSP code graph — symbol-level retrieval, real
