@@ -15,6 +15,7 @@ text you can read.
 A few **optional** capabilities ship a small, dependency-free Node *runner* you start by hand:
 - `skills/automation/god-mode/runner.mjs` — the GOD-mode unattended build loop.
 - `skills/automation/clone/clone-runner.mjs` — the clone's Telegram bridge.
+- `skills/orchestration/fleet/fleet-runner.mjs` — fans out independent *analysis* tasks to parallel workers (edits nothing).
 
 These do **nothing** unless you explicitly run `node …runner.mjs`. They are **never auto-started**, never
 referenced by a hook, and the leader never launches them on its own. Every capability also works **interactively**

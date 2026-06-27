@@ -85,7 +85,7 @@ setup (and whenever you're unsure), **list it yourself**: `Glob` `.claude/skills
 | `security/` | **core:** sec-authz-review (IDOR/BOLA/privesc), sec-injection, sec-authn-session, sec-secrets-crypto, sec-ssrf-traversal, sec-attacker-review · **depth:** sec-frontend, sec-api, sec-deps, sec-iac-cloud, sec-threat-model, sec-headers-config · **privacy:** sec-pii (anonymize user PII before it reaches a model — Presidio) — review for vulnerabilities front→back (OWASP/CWE) |
 | `workflows/` | wf-codebase-audit, wf-security-audit — big multi-step jobs (incl. a full front→back security audit) |
 | `automation/` | **god-mode** (autonomous resumable build; asks only for the critical), **god-mode-zeus** (the dangerously, never-ask tier), **scheduling** (cron/schtasks/launchd recurring runs), **clone** (build the user a Telegram-fronted digital-twin assistant — immortal session, grows a private brain repo) |
-| `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **token-economy** (best output per token), **context-engineering** (curate the context window — cache-stable, retrieve-don't-dump, audit MCPs, measure tokens), **workspace-architect** (build the best `.claude/` workspace), **worktree-isolation** (parallel work without collisions) |
+| `orchestration/` | **subagent-orchestration** (delegate to subagents/teams), **model-router** (pick a model per agent/task), **token-economy** (best output per token), **context-engineering** (curate the context window — cache-stable, retrieve-don't-dump, audit MCPs, measure tokens), **fleet** (dispatch the team to separate parallel sessions for throughput — cost-capped, opt-in), **workspace-architect** (build the best `.claude/` workspace), **worktree-isolation** (parallel work without collisions) |
 | `meta/` | **writing-skills** — author/sharpen a MASTER CLAUDE skill so the archive keeps growing; **statusline-designer** — design a custom Claude Code status line for CLI users (gated, opt-in) |
 | `agents/` | **Sentinel** — the project cartographer; **security-auditor** — read-only security audit → `.security/` |
 
@@ -208,6 +208,7 @@ Watch for the signal, then **offer** (don't force) — one line, with why:
 |---|---|---|
 | long session, token cost piling up | **caveman** | ~65% fewer output tokens |
 | context window full / burning tokens / the model losing the thread | **context-engineering** | curate the window: cache-stable prompts, retrieve don't dump, audit MCPs, measure tokens |
+| work is slow and splits into independent chunks; "make it faster" / "run several at once" | **fleet** | dispatch to separate parallel Claude Code sessions (background agents / teams / headless) — but N× the usage; only for genuinely independent work |
 | a long multi-step build losing the thread | **gsd** | spec-driven autonomy, auto-resumes across /compact |
 | no clear methodology / wants TDD & review discipline | **superpowers** | the broad base skill layer |
 | vague or shifting scope | **grill-me / cap-spec-smith** | pins the spec before building |

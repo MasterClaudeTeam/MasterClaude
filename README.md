@@ -78,7 +78,8 @@ category; each folder has a README that brainstorms what else belongs there (goo
 - **`skills/orchestration/`** — `subagent-orchestration` (delegate to subagents/teams) · `model-router`
   (pick a model per agent — Opus lead / Sonnet workers / Haiku scouts) · `token-economy` (best output per
   token — caveman, cheaper models, cache-warm) · `context-engineering` (curate the window — cache-stable,
-  retrieve-don't-dump, audit MCPs, measure tokens) · `workspace-architect` (the best `.claude/` setup per
+  retrieve-don't-dump, audit MCPs, measure tokens) · `fleet` (run the team in separate parallel sessions for
+  throughput — cost-capped, opt-in) · `workspace-architect` (the best `.claude/` setup per
   project) · `worktree-isolation` (parallel work without collisions).
 - **`skills/meta/`** — `writing-skills` (author or sharpen a MASTER CLAUDE skill) · `statusline-designer`
   (design a custom Claude Code status line for CLI users — gated, opt-in) — so the archive keeps growing.

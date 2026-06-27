@@ -36,6 +36,19 @@ Tools the **context-engineering** skill points at (credit: the "15 ways to stop 
 - **[Tokscale](https://github.com/junhoyeo/tokscale)** — **track token usage** across your agents like an infra
   cost (per model / day / session). Pairs with `model-router` + `token-economy`.
 
+## Parallel sessions (built into Claude Code — what `fleet` uses)
+The **fleet** skill orchestrates these native Claude Code primitives (no extra install) to run the team across
+separate parallel sessions for throughput:
+- **[Background agents](https://code.claude.com/docs/en/agent-view)** — `claude --bg` runs a chunk in its own
+  full session + auto git-worktree; monitor with `claude agents` / `claude logs`. The recommended way to fan out.
+- **[Agent teams](https://code.claude.com/docs/en/agent-teams)** (experimental) — teammates with a shared task
+  list + mailbox, for work that needs coordination.
+- **[Git worktrees](https://code.claude.com/docs/en/worktrees)** — isolate parallel file edits.
+- **[Headless mode](https://code.claude.com/docs/en/cli-reference)** — parallel `claude -p --output-format json`
+  workers (what `fleet-runner.mjs` drives), with `--max-budget-usd` cost caps.
+
+The trade-off is real: **N parallel sessions ≈ N× usage** — fan out only for genuinely independent work.
+
 ## Codebase graph / repo-map (optional MCP power-ups)
 MASTER CLAUDE ships a zero-dependency **`repo-map`** skill (a ranked structure map via Grep/Glob) plus
 **Sentinel** (the architectural map). For a *true* AST/LSP code graph — symbol-level retrieval, real
