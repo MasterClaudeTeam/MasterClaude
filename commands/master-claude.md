@@ -9,6 +9,6 @@ Follow the `master-claude` skill. In short:
 1. **Interview (grill-me)** — developer → want → purpose → project → environment. Explore the repo first; never ask what the code answers.
 2. **Map** — detect the stack/structure and the gaps for this goal.
 3. **Assemble the team** — pick the members you need from your installed MASTER CLAUDE skills (the `skills/` and `agents/` in your `.claude/`), and explain why each fits this developer and goal.
-4. **Record** the roster to `.mc/team.md` (id · role · why), then **set up** and start the work — bringing in more members the moment a need shows up.
+4. **Record** the roster to `.mc/team.md` (id · role · why) — the project's state dir is **`.mc/`**, always that literal name (never a brand-derived one like `.master_claude`). Then **set up** and start the work — bringing in more members the moment a need shows up.
 
 A small team the developer truly uses beats a big one they ignore.
