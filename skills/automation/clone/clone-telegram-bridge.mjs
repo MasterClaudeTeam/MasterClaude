@@ -21,13 +21,17 @@ const SECRET = process.env.TELEGRAM_BRIDGE_SECRET || '';
 const UPSTREAM = (process.env.TELEGRAM_UPSTREAM || 'https://api.telegram.org').replace(/\/+$/, '');
 const LONG_POLL_MS = Number(process.env.BRIDGE_TIMEOUT_MS || 120_000); // must exceed the getUpdates hold (~50s)
 
-// Only ever proxy real Bot API paths: /bot<token>/<method>. Everything else is 404.
+// Only ever proxy real Bot API paths. Everything else is 404.
+//   API calls:      /bot<token>/<method>
+//   file downloads: /file/bot<token>/<file_path>   (getFile then fetch the binary — see clone-telegram.mjs)
 const BOT_PATH = /^\/bot\d{6,12}:[A-Za-z0-9_-]+\/[A-Za-z]+/;
+const FILE_PATH = /^\/file\/bot\d{6,12}:[A-Za-z0-9_-]+\//;
 
 const server = http.createServer(async (req, res) => {
   try {
     if (req.url === '/' || req.url === '/health') { res.writeHead(200, { 'content-type': 'text/plain' }).end('clone-telegram-bridge ok'); return; }
-    if (!BOT_PATH.test(req.url)) { res.writeHead(404).end('not found'); return; }
+    const isFile = FILE_PATH.test(req.url);
+    if (!BOT_PATH.test(req.url) && !isFile) { res.writeHead(404).end('not found'); return; }
     if (SECRET && req.headers['x-bridge-secret'] !== SECRET) { res.writeHead(403).end('forbidden'); return; }
 
     // buffer the (small) request body
@@ -44,9 +48,18 @@ const server = http.createServer(async (req, res) => {
         body: (req.method === 'GET' || req.method === 'HEAD') ? undefined : body,
         signal: ctrl.signal,
       });
-      const text = await upstream.text();
-      res.writeHead(upstream.status, { 'content-type': upstream.headers.get('content-type') || 'application/json' });
-      res.end(text);
+      if (isFile) {
+        // binary passthrough — buffering as text would corrupt the bytes; forward type + length verbatim
+        const buf = Buffer.from(await upstream.arrayBuffer());
+        const h = { 'content-type': upstream.headers.get('content-type') || 'application/octet-stream' };
+        const cl = upstream.headers.get('content-length'); if (cl) h['content-length'] = cl;
+        res.writeHead(upstream.status, h);
+        res.end(buf);
+      } else {
+        const text = await upstream.text();
+        res.writeHead(upstream.status, { 'content-type': upstream.headers.get('content-type') || 'application/json' });
+        res.end(text);
+      }
     } finally { clearTimeout(timer); }
   } catch (e) {
     if (!res.headersSent) res.writeHead(502, { 'content-type': 'application/json' });

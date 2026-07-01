@@ -108,6 +108,14 @@ sends go out; red-lines still refuse. (Same conservative-by-default split as god
   offset before handling = dedupe), serves **only the owner's chat**, queues messages, and drives one fresh
   `claude --continue -p` turn each (crash-proof — durable state is on disk, not in a long process). The turn
   emits a `<<<REPLY>>>…<<<END>>>` block the bridge sends back, chunked.
+- **Media reception (auth-gated).** The owner and **authenticated contacts** can send photos/videos/documents/
+  audio/voice/etc.; the runner downloads each attachment (size-capped via `CLONE_MEDIA_MAX_MB`, default 20MB)
+  to the gitignored `.clone/media/<key>/` and hands the local path to the Claude turn, which reads/analyzes the
+  content. A caption becomes the message text. **Strangers are never downloaded from** — intake runs only after
+  auth, so an unverified sender's attachment is never fetched (they still only get the share-contact prompt).
+  Sender-supplied filenames are treated as hostile (basename only, no traversal/reserved chars, unique-prefixed)
+  and media stays under the gitignored `.clone/` — never the brain, never the vault ciphertext, never committed.
+  Through the bridge, file downloads use the `/file/bot<token>/…` endpoint the relay now also proxies.
 - **Immortal reviver** (ported from the god-mode runner): on a usage/quota limit it sends the owner *"I'm out of
   usage right now"* **once**, keeps queuing, backs off, probes, and **auto-resumes + drains** when usage
   returns. A usage limit is a *pause*, not a stop. `touch .clone/STOP` halts everything; `.clone/PAUSE`
